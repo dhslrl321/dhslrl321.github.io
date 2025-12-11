@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/dhslrl321.github.io/" // ⚠️ repo 이름으로 변경해야 함
 })
