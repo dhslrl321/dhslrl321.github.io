@@ -1,0 +1,8 @@
+### http
+GET https://{{BASE_URL}}/fred/series/categories?series_id=EXJPUS&api_key={{API_KEY}}&file_type=json
+
+### http
+GET https://{{BASE_URL}}/fred/series/&api_key={{API_KEY}}&file_type=json
+
+###
+GET https://{{BASE_URL}}/fred/series/tags?series_id=CPIAUCSL&api_key={{API_KEY}}&file_type=json

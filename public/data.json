@@ -1,1 +1,14 @@
-[]
+{
+  "categories": [
+    {
+      "id": 95,
+      "name": "Monthly Rates",
+      "parent_id": 15
+    },
+    {
+      "id": 275,
+      "name": "Japan",
+      "parent_id": 158
+    }
+  ]
+}
