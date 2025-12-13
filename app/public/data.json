@@ -1,0 +1,46 @@
+[
+  {
+    "id": "a8c1a7d3-90f5-4275-9d7c-f08e57dbf011",
+    "fetchedAt": "2025-01-18T12:00:33.142Z",
+    "payload": {
+      "realtime_start": "2025-01-18",
+      "realtime_end": "2025-01-18",
+      "observation_start": "2020-01-01",
+      "observation_end": "2025-01-01",
+      "units": "lin",
+      "output_type": 1,
+      "file_type": "json",
+      "order_by": "observation_date",
+      "sort_order": "asc",
+      "count": 61,
+      "offset": 0,
+      "limit": 100000,
+      "observations": [
+        {
+          "date": "2020-01-01",
+          "value": "257.971"
+        },
+        {
+          "date": "2020-02-01",
+          "value": "258.320"
+        },
+        {
+          "date": "2020-03-01",
+          "value": "258.115"
+        },
+        {
+          "date": "2020-04-01",
+          "value": "256.389"
+        },
+        {
+          "date": "2020-05-01",
+          "value": "256.394"
+        },
+        {
+          "date": "2020-06-01",
+          "value": "257.797"
+        }
+      ]
+    }
+  }
+]
