@@ -46,37 +46,3 @@ export const NoDataMessage = styled.div`
   color: #9ca3af;
   font-size: 14px;
 `;
-
-export const Timestamp = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: #6b7280;
-  margin-bottom: 12px;
-`;
-
-export const Payload = styled.pre`
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 16px;
-  overflow-x: auto;
-  font-size: 12px;
-  line-height: 1.6;
-  color: #374151;
-  margin: 0;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-
-  /* 스크롤바 스타일링 */
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #d1d5db;
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f3f4f6;
-  }
-`;

@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
-import DataCard from '../components/DataCard.jsx';
+import DataCard from '../components/DataCard';
 import styled from 'styled-components';
 
 export default function Dashboard() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
     fetch('/data.json', { cache: 'no-store' })
-      .then(r => {
+      .then((r) => {
         if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
         return r.json();
       })
-      .then(jsonData => {
+      .then((jsonData) => {
         setData(jsonData);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Failed to fetch data:', err);
         setError(err.message);
         setLoading(false);
@@ -44,7 +44,9 @@ export default function Dashboard() {
     );
   }
 
-  if (data.length === 0) {
+  const seriesArray = Object.values(data);
+
+  if (seriesArray.length === 0) {
     return (
       <EmptyContainer>
         <EmptyIcon>📭</EmptyIcon>
@@ -54,19 +56,22 @@ export default function Dashboard() {
     );
   }
 
+  // 최신 업데이트 시간 찾기
+  const latestUpdate = seriesArray.reduce((latest, item) => {
+    const itemDate = new Date(item.fetchedAt);
+    return itemDate > latest ? itemDate : latest;
+  }, new Date(0));
+
   return (
     <Container>
       <Header>
-        <Count>총 {data.length}개의 데이터</Count>
-        <LastUpdate>
-          마지막 업데이트: {new Date(data[data.length - 1].fetchedAt).toLocaleString('ko-KR')}
-        </LastUpdate>
+        <Count>총 {seriesArray.length}개의 시리즈</Count>
+        <LastUpdate>마지막 업데이트: {latestUpdate.toLocaleString('ko-KR')}</LastUpdate>
       </Header>
-      {data
-        .slice()
-        .reverse()
-        .map(item => (
-          <DataCard key={item.id} item={item} />
+      {seriesArray
+        .sort((a, b) => new Date(b.fetchedAt) - new Date(a.fetchedAt))
+        .map((item) => (
+          <DataCard key={item.seriesId} item={item} />
         ))}
     </Container>
   );

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Navbar from './NavigationBar';
+import Footer from './Footer';
 
 export default function Layout({ children }) {
   return (
@@ -11,6 +12,8 @@ export default function Layout({ children }) {
       <Navbar />
 
       <Main>{children}</Main>
+
+      <Footer />
     </Container>
   );
 }
@@ -21,6 +24,9 @@ const Container = styled.div`
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Header = styled.header`
@@ -33,5 +39,6 @@ const Title = styled.h1`
 `;
 
 const Main = styled.main`
+  flex: 1;
   padding: 20px 0 60px;
 `;
