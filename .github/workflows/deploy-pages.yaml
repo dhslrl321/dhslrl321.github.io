@@ -22,15 +22,15 @@ jobs:
           node-version: "20"
 
       - name: Install deps
-        run: cd app && npm ci
+        run: npm ci
 
       - name: Build
-        run: cd app && npm run build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: app/dist
+          path: dist
 
   deploy:
     needs: build

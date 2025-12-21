@@ -4,5 +4,12 @@ GET https://{{BASE_URL}}/fred/series/categories?series_id=EXJPUS&api_key={{API_K
 ### http
 GET https://{{BASE_URL}}/fred/series/&api_key={{API_KEY}}&file_type=json
 
-###
+### CPI 지수
 GET https://{{BASE_URL}}/fred/series/tags?series_id=CPIAUCSL&api_key={{API_KEY}}&file_type=json
+
+### 금리
+GET https://{{BASE_URL}}/fred/series/observations
+    ?series_id=FEDFUNDS
+    &api_key={{API_KEY}}
+    &file_type=json
+    &observation_start=2015-06-01
