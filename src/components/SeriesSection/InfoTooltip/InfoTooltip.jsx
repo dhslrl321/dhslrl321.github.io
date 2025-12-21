@@ -1,82 +1,34 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-/**
- * 지표 설명 팝업 컴포넌트
- */
 export default function InfoTooltip({ description }) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleScroll = () => {
-      setIsOpen(false);
-    };
-
-    // 스크롤 이벤트 리스너 추가
+    const handleScroll = () => setIsOpen(false);
     window.addEventListener('scroll', handleScroll, true);
-
-    // 클린업
-    return () => {
-      window.removeEventListener('scroll', handleScroll, true);
-    };
+    return () => window.removeEventListener('scroll', handleScroll, true);
   }, [isOpen]);
 
-  return (
-    <TooltipContainer>
-      <InfoButton onClick={() => setIsOpen(!isOpen)} aria-label="지표 설명">
-        ?
-      </InfoButton>
+  const handleClose = () => setIsOpen(false);
 
+  return (
+    <>
       {isOpen && (
         <>
-          <Overlay onClick={() => setIsOpen(false)} />
-          <TooltipPopup>
-            <CloseButton onClick={() => setIsOpen(false)}>✕</CloseButton>
-            <TooltipTitle>지표 설명</TooltipTitle>
-            <TooltipContent>{description}</TooltipContent>
-          </TooltipPopup>
+          <Overlay onClick={handleClose} />
+          <Popup>
+            <CloseButton onClick={handleClose}>✕</CloseButton>
+            <Title>지표 설명</Title>
+            <Content>{description}</Content>
+          </Popup>
         </>
       )}
-    </TooltipContainer>
+    </>
   );
 }
-
-/* ---------- Styles ---------- */
-
-const TooltipContainer = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-const InfoButton = styled.button`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid #9ca3af;
-  background: white;
-  color: #9ca3af;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  margin-left: 6px;
-  padding: 0;
-
-  &:hover {
-    background: #f3f4f6;
-    border-color: #6b7280;
-    color: #6b7280;
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
 
 const Overlay = styled.div`
   position: fixed;
@@ -98,7 +50,7 @@ const Overlay = styled.div`
   }
 `;
 
-const TooltipPopup = styled.div`
+const Popup = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -147,7 +99,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const TooltipTitle = styled.h3`
+const Title = styled.h3`
   margin: 0 0 16px 0;
   font-size: 18px;
   font-weight: 600;
@@ -159,7 +111,7 @@ const TooltipTitle = styled.h3`
   }
 `;
 
-const TooltipContent = styled.p`
+const Content = styled.p`
   margin: 0;
   font-size: 14px;
   line-height: 1.6;

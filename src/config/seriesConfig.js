@@ -1,4 +1,7 @@
-// 시리즈별 메타데이터 설정
+/**
+ * 경제 지표 시리즈 설정
+ */
+
 export const SERIES_CONFIG = {
   FEDFUNDS: {
     unit: '%',
@@ -29,8 +32,7 @@ export const SERIES_CONFIG = {
   },
 };
 
-// 기본 설정
-export const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG = {
   unit: '',
   label: 'Value',
   color: '#2563eb',
@@ -47,10 +49,15 @@ export function getSeriesConfig(seriesId) {
 }
 
 /**
- * 카테고리별 시리즈 필터링
+ * 카테고리별 데이터 필터링
  */
-export function getSeriesByCategory(category) {
-  return Object.entries(SERIES_CONFIG)
-    .filter(([_, config]) => config.category === category)
-    .map(([seriesId]) => seriesId);
+export function filterDataByCategory(data, category) {
+  if (!data || !category) return data;
+
+  return Object.fromEntries(
+    Object.entries(data).filter(([seriesId]) => {
+      const config = getSeriesConfig(seriesId);
+      return config.category === category;
+    })
+  );
 }

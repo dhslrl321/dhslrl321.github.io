@@ -8,15 +8,15 @@ export const Card = styled.div`
   margin-bottom: 24px;
   transition: all 0.2s ease;
 
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
   @media (max-width: 768px) {
     padding: 16px;
     margin-bottom: 20px;
     border-radius: 8px;
-  }
-
-  &:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
   }
 `;
 
@@ -41,17 +41,16 @@ export const MetaItem = styled.div`
   line-height: 1.6;
   word-break: break-word;
 
-  @media (max-width: 768px) {
-    font-size: 13px;
-  }
-
   strong {
     color: #374151;
     font-weight: 600;
     margin-right: 8px;
-    display: inline-block;
+  }
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
+    font-size: 13px;
+
+    strong {
       margin-right: 6px;
     }
   }
