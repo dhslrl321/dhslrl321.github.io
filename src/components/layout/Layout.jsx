@@ -1,37 +1,37 @@
-import styled from "styled-components";
-import Navbar from "./NavigationBar";
+import styled from 'styled-components';
+import Navbar from './NavigationBar';
 
 export default function Layout({ children }) {
-    return (
-        <Container>
-            <Header>
-                <Title>🌍 Macro Dashboard</Title>
-            </Header>
+  return (
+    <Container>
+      <Header>
+        <Title>🌍 Macro Dashboard</Title>
+      </Header>
 
-            <Navbar />
+      <Navbar />
 
-            <Main>{children}</Main>
-        </Container>
-    );
+      <Main>{children}</Main>
+    </Container>
+  );
 }
 
 /* ---------- Styles ---------- */
 
 const Container = styled.div`
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 `;
 
 const Header = styled.header`
-    padding: 28px 0 10px 0;
+  padding: 28px 0 10px 0;
 `;
 
 const Title = styled.h1`
-    font-size: 28px;
-    font-weight: 700;
+  font-size: 28px;
+  font-weight: 700;
 `;
 
 const Main = styled.main`
-    padding: 20px 0 60px;
+  padding: 20px 0 60px;
 `;
