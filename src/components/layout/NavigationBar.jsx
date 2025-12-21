@@ -4,14 +4,25 @@ export default function NavigationBar() {
   return (
     <NavContainer>
       <NavItem href="#" className="active">
-        경제 지표
+        최근 수집 데이터
       </NavItem>
       <NavItem href="#" className="disabled">
         시장 데이터 (준비중)
       </NavItem>
-      <NavItem href="https://kbthink.com/investment/trend.html" target="_blank" rel="noopener noreferrer">
+      <NavItem
+        href="https://kbthink.com/investment/trend.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         시장 동향 분석
       </NavItem>
+      <CoffeeNavItem
+        href="https://buymeacoffee.com/dhslrl321"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ☕ Buy me a coffee
+      </CoffeeNavItem>
     </NavContainer>
   );
 }
@@ -70,5 +81,34 @@ const NavItem = styled.a`
     &:hover {
       color: #d1d5db;
     }
+  }
+`;
+
+const CoffeeNavItem = styled.a`
+  color: #f59e0b;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+    color: #d97706;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;

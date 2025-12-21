@@ -6,7 +6,7 @@ export default function Layout({ children }) {
   return (
     <Container>
       <Header>
-        <Title>🌍 Macro Dashboard</Title>
+        <Title>🌍 경제 대시보드</Title>
       </Header>
 
       <Navbar />
