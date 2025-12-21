@@ -1,13 +1,28 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
-export default function NavigationBar() {
+export default function NavigationBar({ activeTab, onTabChange }) {
   return (
     <NavContainer>
-      <NavItem href="#" className="active">
-        최근 수집 데이터
+      <NavItem
+        href="#"
+        className={activeTab === 'recent' ? 'active' : ''}
+        onClick={(e) => {
+          e.preventDefault();
+          onTabChange('recent');
+        }}
+      >
+        경제 지표
       </NavItem>
-      <NavItem href="#" className="disabled">
-        시장 데이터 (준비중)
+      <NavItem
+        href="#"
+        className={activeTab === 'market' ? 'active' : ''}
+        onClick={(e) => {
+          e.preventDefault();
+          onTabChange('market');
+        }}
+      >
+        시장 데이터
       </NavItem>
       <NavItem
         href="https://kbthink.com/investment/trend.html"

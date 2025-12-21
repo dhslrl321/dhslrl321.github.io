@@ -21,3 +21,11 @@ GET https://{{BASE_URL}}/fred/series/observations
     &file_type=json
     &observation_start=2015-06-01
     &frequency=m
+
+### VIX(변동성 지수)
+GET https://{{BASE_URL}}/fred/series/observations
+    ?series_id=VIXCLS
+    &api_key={{API_KEY}}
+    &file_type=json
+    &observation_start=2015-06-01
+    &frequency=m

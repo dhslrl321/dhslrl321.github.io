@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import DataCard from '../components/DataCard';
+import SummarySection from '../components/SummarySection';
 import styled from 'styled-components';
+import { getSeriesConfig } from '../components/DataCard/config';
 
-export default function Dashboard() {
+export default function Dashboard({ activeTab }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -56,6 +58,28 @@ export default function Dashboard() {
     );
   }
 
+  // 탭에 따라 데이터 필터링
+  let filteredData;
+  if (activeTab === 'market') {
+    // 시장 데이터 탭: market 카테고리만
+    filteredData = Object.fromEntries(
+      Object.entries(data).filter(([key, value]) => {
+        const config = getSeriesConfig(key);
+        return config.category === 'market';
+      })
+    );
+  } else {
+    // 경제 지표 탭 (recent): macro 카테고리만
+    filteredData = Object.fromEntries(
+      Object.entries(data).filter(([key, value]) => {
+        const config = getSeriesConfig(key);
+        return config.category === 'macro';
+      })
+    );
+  }
+
+  const filteredSeriesArray = Object.values(filteredData);
+
   // 최신 업데이트 시간 찾기
   const latestUpdate = seriesArray.reduce((latest, item) => {
     const itemDate = new Date(item.fetchedAt);
@@ -65,17 +89,25 @@ export default function Dashboard() {
   return (
     <Container>
       <Header>
-        <Count>총 {seriesArray.length}개의 지표</Count>
+        <Count>총 {filteredSeriesArray.length}개의 시리즈</Count>
         <LastUpdate>
           마지막 업데이트: <br className="mobile-break" />
           {latestUpdate.toLocaleString('ko-KR')}
         </LastUpdate>
       </Header>
-      {seriesArray
-        .sort((a, b) => new Date(b.fetchedAt) - new Date(a.fetchedAt))
-        .map((item) => (
-          <DataCard key={item.seriesId} item={item} />
-        ))}
+
+      {/* 요약 섹션 */}
+      <SummarySection data={filteredData} />
+
+      {/* 상세 차트 */}
+      <ChartSection>
+        <SectionTitle>상세 차트</SectionTitle>
+        {filteredSeriesArray
+          .sort((a, b) => new Date(b.fetchedAt) - new Date(a.fetchedAt))
+          .map((item) => (
+            <DataCard key={item.seriesId} item={item} />
+          ))}
+      </ChartSection>
     </Container>
   );
 }
@@ -90,13 +122,13 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   padding: 12px 0;
   gap: 16px;
   flex-wrap: wrap;
 
   @media (max-width: 768px) {
-    margin-bottom: 12px;
+    margin-bottom: 20px;
     padding: 8px 0;
     gap: 8px;
   }
@@ -131,6 +163,26 @@ const LastUpdate = styled.div`
 
   @media (max-width: 480px) {
     font-size: 12px;
+  }
+`;
+
+const ChartSection = styled.section`
+  margin-top: 32px;
+
+  @media (max-width: 768px) {
+    margin-top: 24px;
+  }
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 12px;
   }
 `;
 

@@ -30,7 +30,7 @@ function writeJson(data) {
 
 async function fetchFredData(seriesId, observationStart, frequency = null) {
   let url = `${FRED_BASE_URL}/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&file_type=json&observation_start=${observationStart}`;
-  
+
   if (frequency) {
     url += `&frequency=${frequency}`;
   }
@@ -55,6 +55,12 @@ async function main() {
     {
       seriesId: 'T10Y2Y',
       seriesName: '10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity',
+      observationStart: '2015-06-01',
+      frequency: 'm', // monthly
+    },
+    {
+      seriesId: 'VIXCLS',
+      seriesName: 'CBOE Volatility Index: VIX',
       observationStart: '2015-06-01',
       frequency: 'm', // monthly
     },

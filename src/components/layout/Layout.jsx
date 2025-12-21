@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import Navbar from './NavigationBar';
 import Footer from './Footer';
 
-export default function Layout({ children }) {
+export default function Layout({ children, activeTab, onTabChange }) {
   return (
     <Container>
       <Header>
-        <Title>🌍 경제 대시보드</Title>
+        <Title>🌍 Macro Dashboard</Title>
       </Header>
 
-      <Navbar />
+      <Navbar activeTab={activeTab} onTabChange={onTabChange} />
 
       <Main>{children}</Main>
 
