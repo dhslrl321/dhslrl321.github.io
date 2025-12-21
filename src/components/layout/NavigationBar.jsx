@@ -1,14 +1,22 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default function NavigationBar() {
-    return (
-        <NavContainer>
-            <NavItem href="#" className="active">최근 수집 데이터</NavItem>
-            <NavItem href="#" className="disabled">거시지표 (준비중)</NavItem>
-            <NavItem href="#" className="disabled">시장 데이터 (준비중)</NavItem>
-            <NavItem href="#" className="disabled">AI 분석 (준비중)</NavItem>
-        </NavContainer>
-    );
+  return (
+    <NavContainer>
+      <NavItem href="#" className="active">
+        최근 수집 데이터
+      </NavItem>
+      <NavItem href="#" className="disabled">
+        거시지표 (준비중)
+      </NavItem>
+      <NavItem href="#" className="disabled">
+        시장 데이터 (준비중)
+      </NavItem>
+      <NavItem href="#" className="disabled">
+        AI 분석 (준비중)
+      </NavItem>
+    </NavContainer>
+  );
 }
 
 /* ---------- Styles ---------- */
