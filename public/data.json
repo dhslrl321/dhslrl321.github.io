@@ -1,9 +1,9 @@
 {
   "FEDFUNDS": {
-    "id": "488e9891-79a5-4058-a410-84f69992e804",
+    "id": "0d744906-9589-40bf-a6c6-5224df56f3fa",
     "seriesId": "FEDFUNDS",
     "seriesName": "Federal Funds Effective Rate",
-    "fetchedAt": "2025-12-21T05:54:47.157Z",
+    "fetchedAt": "2025-12-21T05:56:16.732Z",
     "observationStart": "2015-06-01",
     "frequency": null,
     "payload": {
@@ -780,10 +780,10 @@
     }
   },
   "T10Y2Y": {
-    "id": "bada973e-8908-4a9f-bed3-b910fc79902f",
+    "id": "c08e672d-d5b2-4af6-820c-1cb0e231c25f",
     "seriesId": "T10Y2Y",
     "seriesName": "10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity",
-    "fetchedAt": "2025-12-21T05:54:47.733Z",
+    "fetchedAt": "2025-12-21T05:56:17.225Z",
     "observationStart": "2015-06-01",
     "frequency": "m",
     "payload": {
