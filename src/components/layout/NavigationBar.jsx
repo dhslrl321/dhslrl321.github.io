@@ -1,8 +1,9 @@
+import { useLocation, Link } from 'react-router-dom';
 import * as S from './NavigationBar.styles';
 
 const NAV_ITEMS = [
-  { id: 'market', label: '시장 데이터', isExternal: false },
-  { id: 'recent', label: '경제 지표', isExternal: false },
+  { id: 'market', label: '시장 데이터', path: '/market' },
+  { id: 'macro', label: '경제 지표', path: '/macro' },
   {
     id: 'kb-think',
     label: '시장 동향 분석',
@@ -11,26 +12,32 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function NavigationBar({ activeTab, onTabChange }) {
-  const handleClick = (e, item) => {
-    if (item.isExternal) return;
-    e.preventDefault();
-    onTabChange(item.id);
-  };
+export default function NavigationBar() {
+  const location = useLocation();
 
   return (
     <S.Nav>
       {NAV_ITEMS.map((item) => (
-        <S.NavItem
-          key={item.id}
-          href={item.url || '#'}
-          className={activeTab === item.id ? 'active' : ''}
-          onClick={(e) => handleClick(e, item)}
-          target={item.isExternal ? '_blank' : undefined}
-          rel={item.isExternal ? 'noopener noreferrer' : undefined}
-        >
-          {item.label}
-        </S.NavItem>
+        item.isExternal ? (
+          <S.NavItem
+            key={item.id}
+            as="a"
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {item.label}
+          </S.NavItem>
+        ) : (
+          <S.NavItem
+            key={item.id}
+            as={Link}
+            to={item.path}
+            className={location.pathname === item.path ? 'active' : ''}
+          >
+            {item.label}
+          </S.NavItem>
+        )
       ))}
       
       <S.CoffeeButton
