@@ -70,11 +70,13 @@ export default function Dashboard({ activeTab }) {
 
       <S.ChartSection>
         <S.SectionTitle>상세 차트</S.SectionTitle>
-        {filteredSeries
-          .sort((a, b) => new Date(b.fetchedAt) - new Date(a.fetchedAt))
-          .map((item) => (
-            <SeriesSection key={item.seriesId} item={item} />
-          ))}
+        <S.ChartGrid>
+          {filteredSeries
+            .sort((a, b) => new Date(b.fetchedAt) - new Date(a.fetchedAt))
+            .map((item) => (
+              <SeriesSection key={item.seriesId} item={item} />
+            ))}
+        </S.ChartGrid>
       </S.ChartSection>
     </S.Container>
   );

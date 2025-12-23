@@ -36,8 +36,44 @@ export const SERIES_CONFIG = {
     color: '#059669',
     name: 'S&P 500 지수',
     description:
-      'S&P 500은 미국 주식시장에 상장된 500개 대형 기업의 주가를 추적하는 시가총액 가중 지수입니다. 미구 경제의 건강도를 평가하는 가장 대표적인 지표로, 전 세계 투자자들이 가장 주목하는 벤치마크 지수입니다.',
+      'S&P 500은 미국 주식시장에 상장된 500개 대형 기업의 주가를 추적하는 시가총액 가중 지수입니다. 미국 경제의 건강도를 평가하는 가장 대표적인 지표로, 전 세계 투자자들이 가장 주목하는 벤치마크 지수입니다.',
     category: 'market',
+  },
+  NASDAQCOM: {
+    unit: '',
+    label: 'NASDAQ',
+    color: '#0891b2',
+    name: 'NASDAQ 종합지수 (대형 기술주)',
+    description:
+      'NASDAQ 종합지수는 나스닥 거래소에 상장된 모든 주식의 시가총액 가중 지수입니다. 특히 상위 10개 종목(Apple, Microsoft, NVIDIA, Amazon, Meta, Tesla, Alphabet, Broadcom 등)이 지수의 50% 이상을 차지하며, 미국 대형 기술주의 성과를 가장 잘 나타내는 지표입니다.',
+    category: 'market',
+  },
+  CPIAUCSL: {
+    unit: '',
+    label: 'CPI',
+    color: '#ea580c',
+    name: '소비자물가지수 (CPI)',
+    description:
+      '미국 도시 소비자들이 구매하는 상품과 서비스의 평균 가격 변화를 측정하는 지표입니다. 인플레이션을 측정하는 가장 대표적인 지표로, 연방준비제도의 통화정책 결정에 핵심적인 영향을 미칩니다. CPI가 상승하면 물가가 오르고 있다는 것을 의미하며, 이는 금리 인상 압력으로 작용할 수 있습니다.',
+    category: 'macro',
+  },
+  CPILFESL: {
+    unit: '',
+    label: 'Core CPI',
+    color: '#f59e0b',
+    name: '근원 소비자물가지수 (Core CPI)',
+    description:
+      '식품과 에너지 가격을 제외한 소비자물가지수입니다. 식품과 에너지 가격은 변동성이 크기 때문에, 근원 CPI는 보다 안정적인 인플레이션 추세를 파악하는 데 유용합니다. 연방준비제도는 통화정책 결정 시 근원 CPI를 중요하게 고려합니다.',
+    category: 'macro',
+  },
+  DTWEXBGS: {
+    unit: '',
+    label: 'Dollar Index',
+    color: '#16a34a',
+    name: '미구 달러 인덱스 (DXY)',
+    description:
+      '미국 달러의 대외 가치를 측정하는 무역 가중 환율 지수입니다. 주요 무역 상대국 통화 대비 달러의 강세를 나타내며, 지수가 상승하면 달러 가치가 상승, 하락하면 달러 가치가 하락하는 것을 의미합니다. 글로벌 무역과 금융시장에 중요한 영향을 미칩니다.',
+    category: 'macro',
   },
 };
 

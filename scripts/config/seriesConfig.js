@@ -27,4 +27,28 @@ export const SERIES_TO_FETCH = [
     observationStart: '2015-06-01',
     frequency: 'm', // monthly
   },
+  {
+    seriesId: 'NASDAQCOM',
+    seriesName: 'NASDAQ Composite Index',
+    observationStart: '2015-06-01',
+    frequency: 'm', // monthly
+  },
+  {
+    seriesId: 'CPIAUCSL',
+    seriesName: 'Consumer Price Index for All Urban Consumers: All Items',
+    observationStart: '2015-06-01',
+    frequency: 'm', // monthly
+  },
+  {
+    seriesId: 'CPILFESL',
+    seriesName: 'Consumer Price Index for All Urban Consumers: All Items Less Food and Energy',
+    observationStart: '2015-06-01',
+    frequency: 'm', // monthly
+  },
+  {
+    seriesId: 'DTWEXBGS',
+    seriesName: 'Trade Weighted U.S. Dollar Index: Broad, Goods and Services',
+    observationStart: '2015-06-01',
+    frequency: 'm', // monthly
+  },
 ];

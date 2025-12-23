@@ -5,8 +5,10 @@ export const Card = styled.div`
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 24px;
-  margin-bottom: 24px;
   transition: all 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -15,7 +17,6 @@ export const Card = styled.div`
 
   @media (max-width: 768px) {
     padding: 16px;
-    margin-bottom: 20px;
     border-radius: 8px;
   }
 `;
@@ -58,11 +59,17 @@ export const MetaItem = styled.div`
 
 export const ChartContainer = styled.div`
   width: 100%;
-  height: 350px;
+  height: 320px;
   margin-top: 20px;
   margin-left: -30px;
   margin-right: -20px;
   padding-right: 20px;
+  flex: 1;
+  min-height: 280px;
+
+  @media (max-width: 1200px) {
+    height: 350px;
+  }
 
   @media (max-width: 768px) {
     height: 280px;
@@ -70,11 +77,13 @@ export const ChartContainer = styled.div`
     margin-left: -20px;
     margin-right: -10px;
     padding-right: 10px;
+    min-height: 250px;
   }
 
   @media (max-width: 480px) {
     height: 250px;
     margin-left: -16px;
+    min-height: 220px;
   }
 `;
 
