@@ -36,7 +36,7 @@ export default function TimeSeriesChart({ data, config, hasNegativeValues }) {
           margin={{
             top: isMobile ? 10 : 5,
             right: 10,
-            left: 0,
+            left: isMobile ? 10 : 20,
             bottom: isMobile ? 5 : 10,
           }}
         >
@@ -58,7 +58,7 @@ export default function TimeSeriesChart({ data, config, hasNegativeValues }) {
             stroke="#6b7280"
             style={{ fontSize: '10px' }}
             tickFormatter={(value) => value.toFixed(1)}
-            width={40}
+            width={isMobile ? 50 : 60}
             tickCount={6}
             label={
               !isMobile
@@ -66,6 +66,7 @@ export default function TimeSeriesChart({ data, config, hasNegativeValues }) {
                     value: config.label,
                     angle: -90,
                     position: 'insideLeft',
+                    offset: 10,
                     style: { fontSize: '11px', fill: '#6b7280', textAnchor: 'middle' },
                   }
                 : undefined
