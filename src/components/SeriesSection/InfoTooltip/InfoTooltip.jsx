@@ -1,31 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-export default function InfoTooltip({ description }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function InfoTooltip({ description, onClose }) {
   useEffect(() => {
-    if (!isOpen) return;
+    const handleScroll = () => onClose();
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
 
-    const handleScroll = () => setIsOpen(false);
     window.addEventListener('scroll', handleScroll, true);
-    return () => window.removeEventListener('scroll', handleScroll, true);
-  }, [isOpen]);
-
-  const handleClose = () => setIsOpen(false);
+    window.addEventListener('keydown', handleEscape);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [onClose]);
 
   return (
     <>
-      {isOpen && (
-        <>
-          <Overlay onClick={handleClose} />
-          <Popup>
-            <CloseButton onClick={handleClose}>✕</CloseButton>
-            <Title>지표 설명</Title>
-            <Content>{description}</Content>
-          </Popup>
-        </>
-      )}
+      <Overlay onClick={onClose} />
+      <Popup>
+        <CloseButton onClick={onClose}>✕</CloseButton>
+        <Title>지표 설명</Title>
+        <Content>{description}</Content>
+      </Popup>
     </>
   );
 }

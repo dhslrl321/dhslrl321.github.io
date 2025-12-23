@@ -6,7 +6,7 @@ export default function Layout({ children, activeTab, onTabChange }) {
   return (
     <S.Container>
       <S.Header>
-        <S.Title>🌍 Macro Dashboard</S.Title>
+        <S.Title>🌍 Swoop 경제 숲</S.Title>
       </S.Header>
 
       <NavigationBar activeTab={activeTab} onTabChange={onTabChange} />

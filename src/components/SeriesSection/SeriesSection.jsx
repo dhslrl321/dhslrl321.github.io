@@ -23,7 +23,7 @@ export default function SeriesSection({ item }) {
         onInfoClick={() => setShowInfo(true)}
       />
 
-      {showInfo && <InfoTooltip description={config.description} />}
+      {showInfo && <InfoTooltip description={config.description} onClose={() => setShowInfo(false)} />}
 
       {hasData ? (
         <ChartContainer>

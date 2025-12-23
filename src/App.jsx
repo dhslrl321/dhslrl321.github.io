@@ -6,7 +6,7 @@ import { GlobalStyle } from './styles/GlobalStyles';
 import Layout from './components/layout/Layout.jsx';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('recent');
+  const [activeTab, setActiveTab] = useState('market');
 
   return (
     <ThemeProvider theme={theme}>

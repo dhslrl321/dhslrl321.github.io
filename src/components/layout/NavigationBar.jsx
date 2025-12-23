@@ -1,8 +1,8 @@
 import * as S from './NavigationBar.styles';
 
 const NAV_ITEMS = [
-  { id: 'recent', label: '경제 지표', isExternal: false },
   { id: 'market', label: '시장 데이터', isExternal: false },
+  { id: 'recent', label: '경제 지표', isExternal: false },
   {
     id: 'kb-think',
     label: '시장 동향 분석',
