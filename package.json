@@ -13,12 +13,12 @@
     "update-data": "node scripts/update-data.js"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0",
-    "styled-components": "^6.1.19",
     "recharts": "^2.15.0",
-    "date-fns": "^4.1.0"
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -26,12 +26,13 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
-    "vite": "^7.2.4",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "terser": "^5.44.1",
+    "vite": "^7.2.4"
   }
 }

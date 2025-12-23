@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- GitHub Pages SPA 라우팅 처리 -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    
+    <!-- Primary Meta Tags -->
+    <title>실시간 경제지표 몰아보기 - 연방기금금리, VIX, 금리차 | Swoop</title>
+    <meta name="title" content="실시간 경제지표 몰아보기 - 연방기금금리, VIX, 금리차 | Swoop" />
+    <meta name="description" content="실시간 경제지표 몰아보기 - 연방기금금리, 장단기 금리차, VIX 변동성 지수 등 핵심 미국 경제지표를 한눈에 확인하세요. 매주 자동 업데이트되는 무료 경제 대시보드입니다." />
+    <meta name="keywords" content="실시간 경제지표, 경제지표 몰아보기, 연방기금금리, 금리차, VIX, 장단기금리차, 경제지표 대시보드, 미국 경제지표, FRED, 매크로 지표, 투자 지표, 경제 데이터, 경기 침체 지표, 금리 인상, 통화정책" />
+    <meta name="author" content="Swoop" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://dhslrl321.github.io/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dhslrl321.github.io/" />
+    <meta property="og:title" content="실시간 경제지표 몰아보기 - 연방기금금리, VIX, 금리차" />
+    <meta property="og:description" content="연방기금금리, 장단기 금리차, VIX 등 핵심 미국 경제지표를 한눈에 확인하세요. 매주 자동 업데이트되는 무료 대시보드입니다." />
+    <meta property="og:image" content="https://dhslrl321.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="실시간 경제지표 몰아보기 대시보드" />
+    <meta property="og:site_name" content="Swoop" />
+    <meta property="og:locale" content="ko_KR" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://dhslrl321.github.io/" />
+    <meta property="twitter:title" content="실시간 경제지표 몰아보기 - 연방기금금리, VIX, 금리차" />
+    <meta property="twitter:description" content="연방기금금리, 장단기 금리차, VIX 등 핵심 미국 경제지표를 한눈에 확인하세요. 매주 자동 업데이트되는 무료 대시보드입니다." />
+    <meta property="twitter:image" content="https://dhslrl321.github.io/og-image.png" />
+    <meta property="twitter:image:alt" content="실시간 경제지표 몰아보기 대시보드" />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8HSLXGFMW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-M8HSLXGFMW');
+    </script>
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "실시간 경제지표 몰아보기 | Swoop",
+      "alternateName": "Swoop",
+      "url": "https://dhslrl321.github.io/",
+      "description": "연방기금금리, 장단기 금리차, VIX 등 핵심 미국 경제지표를 한눈에 확인하는 무료 경제 대시보드",
+      "inLanguage": "ko-KR",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "keywords": "실시간 경제지표, 경제지표 몰아보기, 연방기금금리, VIX, 금리차, 경제 대시보드",
+      "featureList": [
+        "실시간 경제지표 모니터링",
+        "연방기금금리 추적",
+        "장단기 금리차 분석",
+        "VIX 변동성 지수 확인",
+        "인터랙티브 차트 시각화",
+        "매주 자동 데이터 업데이트"
+      ],
+      "author": {
+        "@type": "Organization",
+        "name": "Swoop"
+      }
+    }
+    </script>
+    <script type="module" crossorigin src="/assets/index-DBRxUFoL.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-89_T_jo3.js">
+    <link rel="modulepreload" crossorigin href="/assets/chart-vendor-0iDgxGJy.js">
+    <link rel="modulepreload" crossorigin href="/assets/styled-vendor-DE-Bn9o4.js">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
