@@ -8,9 +8,36 @@ import { getSeriesConfig } from '../../config/seriesConfig';
 
 export default function SeriesSection({ item }) {
   const [showInfo, setShowInfo] = useState(false);
+  const [timeRange, setTimeRange] = useState('all'); // 'all', '1y', '5y', '10y'
   
   const config = getSeriesConfig(item.seriesId);
-  const chartData = transformObservationsToChartData(item.payload?.observations);
+  const allChartData = transformObservationsToChartData(item.payload?.observations);
+  
+  // 기간에 따라 데이터 필터링
+  const getFilteredData = () => {
+    if (timeRange === 'all') return allChartData;
+    
+    const now = new Date();
+    const cutoffDate = new Date();
+    
+    switch (timeRange) {
+      case '1y':
+        cutoffDate.setFullYear(now.getFullYear() - 1);
+        break;
+      case '5y':
+        cutoffDate.setFullYear(now.getFullYear() - 5);
+        break;
+      case '10y':
+        cutoffDate.setFullYear(now.getFullYear() - 10);
+        break;
+      default:
+        return allChartData;
+    }
+    
+    return allChartData.filter(item => new Date(item.date) >= cutoffDate);
+  };
+  
+  const chartData = getFilteredData();
   const { hasNegativeValues } = calculateDataStats(chartData);
   const hasData = chartData.length > 0;
 
@@ -21,6 +48,8 @@ export default function SeriesSection({ item }) {
         seriesId={item.seriesId}
         chartData={chartData}
         onInfoClick={() => setShowInfo(true)}
+        timeRange={timeRange}
+        onTimeRangeChange={setTimeRange}
       />
 
       {showInfo && <InfoTooltip description={config.description} onClose={() => setShowInfo(false)} />}
