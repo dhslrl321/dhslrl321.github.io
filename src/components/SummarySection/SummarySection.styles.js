@@ -25,9 +25,18 @@ export const Grid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
 
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 `;
 
@@ -44,7 +53,7 @@ export const SummaryCard = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 16px;
+    padding: 12px;
     border-radius: 8px;
   }
 `;
@@ -57,7 +66,9 @@ export const CardHeader = styled.div`
   gap: 12px;
 
   @media (max-width: 768px) {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 4px;
   }
 `;
 
@@ -68,7 +79,7 @@ export const SeriesName = styled.div`
   line-height: 1.4;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-size: 12px;
   }
 `;
 
@@ -78,7 +89,7 @@ export const Date = styled.div`
   white-space: nowrap;
 
   @media (max-width: 768px) {
-    font-size: 11px;
+    font-size: 10px;
   }
 `;
 
@@ -86,12 +97,17 @@ export const ValueSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media (max-width: 768px) {
+    gap: 6px;
+  }
 `;
 
 export const LatestValue = styled.div`
   display: flex;
   align-items: baseline;
   gap: 4px;
+  flex-wrap: wrap;
 `;
 
 export const ValueNumber = styled.span`
@@ -100,7 +116,7 @@ export const ValueNumber = styled.span`
   color: #1f2937;
 
   @media (max-width: 768px) {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 
@@ -110,7 +126,7 @@ export const ValueUnit = styled.span`
   color: #6b7280;
 
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
@@ -123,12 +139,21 @@ export const ChangeInfo = styled.div`
     props.$isPositive ? '#fef2f2' : props.$isNegative ? '#eff6ff' : '#f9fafb'};
   border-radius: 6px;
   align-self: flex-start;
+
+  @media (max-width: 768px) {
+    padding: 3px 8px;
+    gap: 4px;
+  }
 `;
 
 export const ChangeArrow = styled.span`
   font-size: 12px;
   color: ${(props) =>
     props.$isPositive ? '#dc2626' : props.$isNegative ? '#2563eb' : '#6b7280'};
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 export const ChangeText = styled.span`
@@ -137,6 +162,6 @@ export const ChangeText = styled.span`
   color: #374151;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-size: 11px;
   }
 `;
