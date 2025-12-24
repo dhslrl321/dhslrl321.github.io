@@ -46,8 +46,14 @@ export const SERIES_TO_FETCH = [
     frequency: 'm', // monthly
   },
   {
-    seriesId: 'DTWEXBGS',
-    seriesName: 'Trade Weighted U.S. Dollar Index: Broad, Goods and Services',
+    seriesId: 'PAYEMS',
+    seriesName: 'All Employees, Total Nonfarm',
+    observationStart: '2015-06-01',
+    frequency: 'm', // monthly
+  },
+  {
+    seriesId: 'UNRATE',
+    seriesName: 'Unemployment Rate',
     observationStart: '2015-06-01',
     frequency: 'm', // monthly
   },

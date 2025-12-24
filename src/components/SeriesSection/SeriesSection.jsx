@@ -31,6 +31,7 @@ export default function SeriesSection({ item }) {
             data={chartData}
             config={config}
             hasNegativeValues={hasNegativeValues}
+            seriesId={item.seriesId}
           />
         </ChartContainer>
       ) : (

@@ -6,7 +6,7 @@ import Layout from './components/layout/Layout.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('market');
+  const [activeTab, setActiveTab] = useState('macro');
 
   return (
     <ThemeProvider theme={theme}>

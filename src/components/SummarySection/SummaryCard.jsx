@@ -1,6 +1,7 @@
 import * as S from './SummarySection.styles';
+import { formatValueBySeries, formatChange } from '../../utils/numberFormatter';
 
-export default function SummaryCard({ config, latestData, previousData }) {
+export default function SummaryCard({ config, latestData, previousData, seriesId }) {
   if (!latestData) return null;
 
   const change = previousData ? latestData.value - previousData.value : 0;
@@ -16,7 +17,9 @@ export default function SummaryCard({ config, latestData, previousData }) {
 
       <S.ValueSection>
         <S.LatestValue>
-          <S.ValueNumber>{latestData.value.toFixed(2)}</S.ValueNumber>
+          <S.ValueNumber>
+            {formatValueBySeries(latestData.value, seriesId, config)}
+          </S.ValueNumber>
           <S.ValueUnit>{config.unit}</S.ValueUnit>
         </S.LatestValue>
 
@@ -26,8 +29,7 @@ export default function SummaryCard({ config, latestData, previousData }) {
               {isPositive ? '▲' : isNegative ? '▼' : '―'}
             </S.ChangeArrow>
             <S.ChangeText>
-              {isPositive ? '+' : ''}
-              {change.toFixed(2)}
+              {formatChange(change, seriesId, config)}
               {config.unit}
             </S.ChangeText>
           </S.ChangeInfo>

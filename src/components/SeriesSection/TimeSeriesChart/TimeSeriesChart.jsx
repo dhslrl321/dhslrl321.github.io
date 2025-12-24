@@ -11,8 +11,9 @@ import {
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { formatDateYYYYMM, formatKoreanDate } from '../../../utils/dateFormatter.js';
+import { formatValueBySeries } from '../../../utils/numberFormatter.js';
 
-export default function TimeSeriesChart({ data, config, hasNegativeValues }) {
+export default function TimeSeriesChart({ data, config, hasNegativeValues, seriesId }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -23,9 +24,31 @@ export default function TimeSeriesChart({ data, config, hasNegativeValues }) {
   }, []);
 
   const tooltipFormatter = (value) => [
-    `${value.toFixed(2)}${config.unit}`,
+    `${formatValueBySeries(value, seriesId, config)}${config.unit}`,
     config.label,
   ];
+
+  const yAxisFormatter = (value) => {
+    // Y축은 간결하게 표시
+    if (seriesId === 'PAYEMS') {
+      // 비농업 고용자 수: 159552 -> 159.6K
+      if (Math.abs(value) >= 1000) {
+        return `${(value / 1000).toFixed(1)}K`;
+      }
+      return value.toFixed(0);
+    }
+
+    if (seriesId === 'SP500' || seriesId === 'NASDAQCOM') {
+      // 지수는 천 단위 구분
+      if (Math.abs(value) >= 1000) {
+        return `${(value / 1000).toFixed(1)}K`;
+      }
+      return value.toFixed(0);
+    }
+
+    // 기본: 소수점 1자리
+    return value.toFixed(1);
+  };
 
   return (
     <ChartWrapper>
@@ -57,7 +80,7 @@ export default function TimeSeriesChart({ data, config, hasNegativeValues }) {
           <YAxis
             stroke="#6b7280"
             style={{ fontSize: '10px' }}
-            tickFormatter={(value) => value.toFixed(1)}
+            tickFormatter={yAxisFormatter}
             width={isMobile ? 50 : 60}
             tickCount={6}
             label={

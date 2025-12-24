@@ -26,6 +26,7 @@ export default function SummarySection({ data }) {
           return (
             <SummaryCard
               key={item.seriesId}
+              seriesId={item.seriesId}
               config={config}
               latestData={latestData}
               previousData={previousData}
