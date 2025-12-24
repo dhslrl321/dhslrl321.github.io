@@ -2,7 +2,7 @@ import * as S from './Dashboard.styles';
 import SeriesSection from '../components/SeriesSection/SeriesSection.jsx';
 import SummarySection from '../components/SummarySection/SummarySection.jsx';
 import { useEconomicData } from '../hooks/useEconomicData';
-import { filterDataByCategory } from '../config/seriesConfig';
+import { filterDataByCategory, getSeriesConfig } from '../config/seriesConfig';
 
 function LoadingState() {
   return (
@@ -72,7 +72,13 @@ export default function Dashboard({ activeTab }) {
         <S.SectionTitle>상세 차트</S.SectionTitle>
         <S.ChartGrid>
           {filteredSeries
-            .sort((a, b) => new Date(b.fetchedAt) - new Date(a.fetchedAt))
+            .sort((a, b) => {
+              const configA = getSeriesConfig(a.seriesId);
+              const configB = getSeriesConfig(b.seriesId);
+              const orderA = configA.order ?? 999;
+              const orderB = configB.order ?? 999;
+              return orderA - orderB;
+            })
             .map((item) => (
               <SeriesSection key={item.seriesId} item={item} />
             ))}

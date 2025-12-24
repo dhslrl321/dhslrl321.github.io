@@ -30,6 +30,9 @@ export const NavItem = styled.a`
   white-space: nowrap;
   flex-shrink: 0;
   text-decoration: none;
+  background: none;
+  border: none;
+  font-family: inherit;
 
   @media (max-width: 768px) {
     font-size: 14px;

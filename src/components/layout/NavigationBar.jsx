@@ -1,9 +1,8 @@
-import { useLocation, Link } from 'react-router-dom';
 import * as S from './NavigationBar.styles';
 
 const NAV_ITEMS = [
-  { id: 'market', label: '시장 데이터', path: '/market' },
-  { id: 'macro', label: '경제 지표', path: '/macro' },
+  { id: 'market', label: '시장 데이터' },
+  { id: 'macro', label: '경제 지표' },
   {
     id: 'kb-think',
     label: '시장 동향 분석',
@@ -12,12 +11,10 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function NavigationBar() {
-  const location = useLocation();
-
+export default function NavigationBar({ activeTab, onTabChange }) {
   return (
     <S.Nav>
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map((item) =>
         item.isExternal ? (
           <S.NavItem
             key={item.id}
@@ -31,15 +28,15 @@ export default function NavigationBar() {
         ) : (
           <S.NavItem
             key={item.id}
-            as={Link}
-            to={item.path}
-            className={location.pathname === item.path ? 'active' : ''}
+            as="button"
+            className={activeTab === item.id ? 'active' : ''}
+            onClick={() => onTabChange(item.id)}
           >
             {item.label}
           </S.NavItem>
         )
-      ))}
-      
+      )}
+
       <S.CoffeeButton
         href="https://buymeacoffee.com/dhslrl321"
         target="_blank"
