@@ -1,126 +1,126 @@
 /**
- * 경제 지표 시리즈 설정
+ * jamsil 사이트 콘텐츠 설정
+ *
+ * - macro: 매크로 지표 (FRED 월간/분기 발표)
+ * - indices: 지수 (FRED daily, 전일/전주 % 표시)
+ * - etfs: 대표 ETF (FRED 미수집, TradingView 링크만)
  */
 
-export const SERIES_CONFIG = {
-  FEDFUNDS: {
-    unit: '%',
-    label: '금리 (%)',
-    color: '#2563eb',
+const fredUrl = id => `https://fred.stlouisfed.org/series/${id}`;
+const tvUrl = sym => `https://www.tradingview.com/symbols/${sym}/`;
+
+export const MACRO_INDICATORS = [
+  {
+    seriesId: 'FEDFUNDS',
     name: '연방기금금리',
-    description:
-      '미국 연방준비제도(Fed)가 설정하는 단기 금리로, 은행 간 초단기 대출에 적용됩니다. 이 금리는 미국 경제의 통화정책을 나타내는 핵심 지표이며, 금리가 높을수록 긴축 정책, 낮을수록 완화 정책을 의미합니다.',
-    category: 'macro',
-    order: 1,
-  },
-  T10Y2Y: {
     unit: '%',
-    label: '금리차 (%)',
-    color: '#dc2626',
-    name: '장단기 금리차 (10년물 - 2년물)',
+    decimals: 2,
     description:
-      '10년 만기 국채 금리에서 2년 만기 국채 금리를 뺀 값입니다. 일반적으로 양수(+)는 정상적인 경제 상태를 의미하고, 음수(-)로 전환되면 경기 침체의 선행 지표로 간주됩니다. 역사적으로 금리 역전 후 1-2년 내 경기 침체가 발생한 사례가 많습니다.',
-    category: 'macro',
-    order: 2,
+      'Fed가 설정하는 단기 정책금리. 통화정책의 방향(긴축/완화)을 가장 직접적으로 보여주는 지표.',
+    link: fredUrl('FEDFUNDS'),
   },
-  VIXCLS: {
-    unit: '',
-    label: 'VIX 지수',
-    color: '#7c3aed',
-    name: 'VIX 변동성 지수',
+  {
+    seriesId: 'T10Y2Y',
+    name: '장단기 금리차 (10Y - 2Y)',
+    unit: '%p',
+    decimals: 2,
     description:
-      'CBOE 변동성 지수(VIX)는 S&P 500 지수 옵션의 내재 변동성을 측정하는 지표로, 시장의 공포 지수라고도 불립니다. VIX가 높을수록 시장의 불확실성과 투자자들의 불안감이 크다는 것을 의미합니다. 일반적으로 20 이상이면 높은 변동성, 30 이상이면 극심한 공포 상태로 해석됩니다.',
-    category: 'market',
-    order: 1,
+      '10년물에서 2년물 금리를 뺀 값. 음수 전환(역전)은 역사적으로 1~2년 내 경기 침체의 선행 지표로 작동.',
+    link: fredUrl('T10Y2Y'),
   },
-  SP500: {
-    unit: '',
-    label: 'S&P 500',
-    color: '#059669',
-    name: 'S&P 500 지수',
-    description:
-      'S&P 500은 미국 주식시장에 상장된 500개 대형 기업의 주가를 추적하는 시가총액 가중 지수입니다. 미국 경제의 건강도를 평가하는 가장 대표적인 지표로, 전 세계 투자자들이 가장 주목하는 벤치마크 지수입니다.',
-    category: 'market',
-    order: 2,
-  },
-  NASDAQCOM: {
-    unit: '',
-    label: 'NASDAQ',
-    color: '#0891b2',
-    name: 'NASDAQ 종합지수 (대형 기술주)',
-    description:
-      'NASDAQ 종합지수는 나스닥 거래소에 상장된 모든 주식의 시가총액 가중 지수입니다. 특히 상위 10개 종목(Apple, Microsoft, NVIDIA, Amazon, Meta, Tesla, Alphabet, Broadcom 등)이 지수의 50% 이상을 차지하며, 미국 대형 기술주의 성과를 가장 잘 나타내는 지표입니다.',
-    category: 'market',
-    order: 3,
-  },
-  CPIAUCSL: {
-    unit: '',
-    label: 'CPI',
-    color: '#ea580c',
+  {
+    seriesId: 'CPIAUCSL',
     name: '소비자물가지수 (CPI)',
-    description:
-      '미국 도시 소비자들이 구매하는 상품과 서비스의 평균 가격 변화를 측정하는 지표입니다. 인플레이션을 측정하는 가장 대표적인 지표로, 연방준비제도의 통화정책 결정에 핵심적인 영향을 미칩니다. CPI가 상승하면 물가가 오르고 있다는 것을 의미하며, 이는 금리 인상 압력으로 작용할 수 있습니다.',
-    category: 'macro',
-    order: 3,
-  },
-  CPILFESL: {
     unit: '',
-    label: 'Core CPI',
-    color: '#f59e0b',
-    name: '근원 소비자물가지수 (Core CPI)',
+    decimals: 2,
     description:
-      '식품과 에너지 가격을 제외한 소비자물가지수입니다. 식품과 에너지 가격은 변동성이 크기 때문에, 근원 CPI는 보다 안정적인 인플레이션 추세를 파악하는 데 유용합니다. 연방준비제도는 통화정책 결정 시 근원 CPI를 중요하게 고려합니다.',
-    category: 'macro',
-    order: 4,
+      '미국 도시 소비자가 구매하는 상품·서비스의 평균 가격 변화. 인플레이션 측정의 대표 지표.',
+    link: fredUrl('CPIAUCSL'),
   },
-  PAYEMS: {
-    unit: '명',
-    label: '고용자 수',
-    color: '#10b981',
-    name: '비농업 고용자 수',
+  {
+    seriesId: 'CPILFESL',
+    name: '근원 CPI (Core CPI)',
+    unit: '',
+    decimals: 2,
     description:
-      '미국 비농업 부문의 총 고용자 수를 나타내는 지표입니다. 매월 발표되며, 경제 활동과 노동 시장의 건강도를 측정하는 핵심 지표입니다. 고용자 수가 증가하면 경제가 성장하고 있음을 의미하며, 감소하면 경기 둔화 신호로 해석됩니다. 연방준비제도의 통화정책 결정에 중요한 영향을 미칩니다.',
-    category: 'macro',
-    order: 5,
+      '식품·에너지를 제외한 CPI. 변동성이 큰 항목을 빼서 안정적인 인플레이션 추세를 보여줌. Fed가 중요시함.',
+    link: fredUrl('CPILFESL'),
   },
-  UNRATE: {
-    unit: '%',
-    label: '실업률 (%)',
-    color: '#ef4444',
+  {
+    seriesId: 'PAYEMS',
+    name: '비농업 고용자수 (NFP)',
+    unit: '천명',
+    decimals: 0,
+    description:
+      '미국 비농업 부문의 총 고용자 수. 매월 첫째 금요일 발표. 노동시장의 건강도를 측정.',
+    link: fredUrl('PAYEMS'),
+  },
+  {
+    seriesId: 'UNRATE',
     name: '실업률',
-    description:
-      '경제활동인구 중 실업자가 차지하는 비율을 나타내는 지표입니다. 실업률이 낮을수록 노동 시장이 건강하고 경제가 활발하다는 것을 의미합니다. 일반적으로 4% 이하면 완전고용 상태로 간주되며, 급격한 상승은 경기 침체의 신호로 해석됩니다. 고용 지표와 함께 연방준비제도의 정책 결정에 핵심적인 역할을 합니다.',
-    category: 'macro',
-    order: 6,
+    unit: '%',
+    decimals: 1,
+    description: '경제활동인구 중 실업자 비율. 4% 이하면 완전고용 상태로 간주. 급상승은 침체 신호.',
+    link: fredUrl('UNRATE'),
   },
-};
+];
 
-const DEFAULT_CONFIG = {
-  unit: '',
-  label: 'Value',
-  color: '#2563eb',
-  name: 'Unknown Series',
-  description: '이 지표에 대한 설명이 없습니다.',
-  category: 'other',
-};
+export const MARKET_INDICES = [
+  {
+    seriesId: 'SP500',
+    name: 'S&P 500',
+    unit: '',
+    decimals: 2,
+    link: tvUrl('SP-SPX'),
+  },
+  {
+    seriesId: 'NASDAQCOM',
+    name: 'NASDAQ Composite',
+    unit: '',
+    decimals: 2,
+    link: tvUrl('NASDAQ-IXIC'),
+  },
+  {
+    seriesId: 'DJIA',
+    name: 'Dow Jones',
+    unit: '',
+    decimals: 2,
+    link: tvUrl('DJ-DJI'),
+  },
+  {
+    seriesId: 'VIXCLS',
+    name: 'VIX 변동성지수',
+    unit: '',
+    decimals: 2,
+    link: tvUrl('TVC-VIX'),
+  },
+  {
+    seriesId: 'DGS10',
+    name: '10Y 국채 금리',
+    unit: '%',
+    decimals: 2,
+    link: tvUrl('TVC-TNX'),
+  },
+  {
+    seriesId: 'DTWEXBGS',
+    name: '달러 인덱스 (DXY)',
+    unit: '',
+    decimals: 2,
+    link: tvUrl('TVC-DXY'),
+  },
+];
 
-/**
- * 시리즈 ID로 설정 가져오기
- */
-export function getSeriesConfig(seriesId) {
-  return SERIES_CONFIG[seriesId] || DEFAULT_CONFIG;
-}
-
-/**
- * 카테고리별 데이터 필터링
- */
-export function filterDataByCategory(data, category) {
-  if (!data || !category) return data;
-
-  return Object.fromEntries(
-    Object.entries(data).filter(([seriesId]) => {
-      const config = getSeriesConfig(seriesId);
-      return config.category === category;
-    })
-  );
-}
+export const MARKET_ETFS = [
+  { ticker: 'SPY', name: 'S&P 500 ETF', link: tvUrl('AMEX-SPY') },
+  { ticker: 'QQQ', name: 'NASDAQ-100 ETF', link: tvUrl('NASDAQ-QQQ') },
+  { ticker: 'DIA', name: 'Dow ETF', link: tvUrl('AMEX-DIA') },
+  { ticker: 'IWM', name: 'Russell 2000 ETF (중소형주)', link: tvUrl('AMEX-IWM') },
+  { ticker: 'TLT', name: '20+년 장기 국채 ETF', link: tvUrl('NASDAQ-TLT') },
+  { ticker: 'HYG', name: '하이일드 회사채 ETF', link: tvUrl('AMEX-HYG') },
+  { ticker: 'GLD', name: '금 ETF', link: tvUrl('AMEX-GLD') },
+  { ticker: 'USO', name: '원유 ETF (WTI)', link: tvUrl('AMEX-USO') },
+  { ticker: 'XLK', name: '기술주 섹터 ETF', link: tvUrl('AMEX-XLK') },
+  { ticker: 'XLF', name: '금융주 섹터 ETF', link: tvUrl('AMEX-XLF') },
+  { ticker: 'XLE', name: '에너지 섹터 ETF', link: tvUrl('AMEX-XLE') },
+  { ticker: 'SOXX', name: '반도체 ETF', link: tvUrl('NASDAQ-SOXX') },
+];

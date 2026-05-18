@@ -61,6 +61,7 @@ export const CoffeeButton = styled.a`
   white-space: nowrap;
   flex-shrink: 0;
   text-decoration: none;
+  margin-left: auto;
 
   @media (max-width: 768px) {
     font-size: 14px;

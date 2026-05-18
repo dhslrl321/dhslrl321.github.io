@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <S.FooterContainer>
       <S.FooterContent>
-        <S.Copyright>© 2025 Macro Dashboard. All rights reserved.</S.Copyright>
+        <S.Copyright>© 2026 jamsil. All rights reserved.</S.Copyright>
         <S.RightSection>
           <S.Contact>
             문의: <S.EmailLink href="mailto:dhslrl321@gmail.com">dhslrl321@gmail.com</S.EmailLink>

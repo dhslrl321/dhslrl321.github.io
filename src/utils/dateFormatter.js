@@ -9,7 +9,7 @@
  */
 export function formatKoreanDateTime(isoString) {
   if (!isoString) return '';
-  
+
   const date = new Date(isoString);
   return date.toLocaleString('ko-KR', {
     year: 'numeric',
@@ -48,7 +48,7 @@ export function formatDateYYYYMM(dateString) {
  */
 export function formatKoreanDate(dateString) {
   if (!dateString) return '';
-  
+
   const [year, month, day] = dateString.split('-');
   return `${year}년 ${month}월 ${day}일`;
 }

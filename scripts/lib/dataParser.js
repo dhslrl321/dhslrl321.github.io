@@ -53,7 +53,7 @@ export function calculateDataStatistics(data) {
 
   const stats = {
     totalSeries: series.length,
-    successfulFetches: series.filter((s) => s.payload?.observations).length,
+    successfulFetches: series.filter(s => s.payload?.observations).length,
     latestUpdate: null,
     seriesSummary: [],
   };
@@ -70,7 +70,7 @@ export function calculateDataStatistics(data) {
   // 각 시리즈 요약
   for (const item of series) {
     const observations = item.payload?.observations || [];
-    const validObservations = observations.filter((obs) => obs.value !== '.');
+    const validObservations = observations.filter(obs => obs.value !== '.');
     const latestObservation = validObservations[validObservations.length - 1];
 
     stats.seriesSummary.push({

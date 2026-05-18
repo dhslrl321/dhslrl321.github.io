@@ -1,104 +1,46 @@
-# 🌍 Swoop (숲) - 실시간 경제지표 대시보드
+# jamsil
 
-연방기금금리, 장단기 금리차, VIX 등 주요 경제지표를 실시간으로 한눈에 확인하세요.
+출근길에 한눈에 보는 매크로 지표 · 시장 지수 · 대표 ETF 대시보드.
 
-## ✨ 주요 기능
+## 컨셉
 
-- 📊 **실시간 경제 지표**: FRED API를 통한 최신 데이터 수집
-- 📈 **인터랙티브 차트**: Recharts 기반의 시각화
-- 📱 **반응형 디자인**: 모바일/태블릿/데스크톱 최적화
-- 🔄 **자동 업데이트**: GitHub Actions로 매주 자동 데이터 수집
-- 💡 **지표 설명**: 각 경제 지표에 대한 상세 설명 제공
+- 차트는 직접 그리지 않는다. 기성 서비스(FRED, TradingView)가 훨씬 잘 그린다.
+- 사용자가 매일 아침 보고 싶은 정보만 빠르게 보여주고, 자세한 차트는 외부 링크로 이동.
+- 지수/ETF는 **전일 대비 %**, **전주 대비 %**만 표시.
+- 매크로 지표는 최신값과 발표일자, 전월 대비 변화량.
 
-## 🎯 수집 지표
+## 섹션
 
-### 경제 지표
-- **FEDFUNDS**: 연방기금금리
-- **T10Y2Y**: 장단기 금리차 (10년물 - 2년물)
+1. **매크로 지표** (FRED 월간 발표)
+   - 연방기금금리, 장단기 금리차, CPI, Core CPI, 비농업 고용자수, 실업률
 
-### 시장 데이터
-- **VIXCLS**: VIX 변동성 지수
+2. **시장 지수** (FRED daily)
+   - S&P 500, NASDAQ Composite, Dow Jones, VIX, 10Y Treasury, DXY
 
-## 🚀 빠른 시작
+3. **대표 ETF** (TradingView 링크)
+   - SPY, QQQ, DIA, IWM, TLT, HYG, GLD, USO, XLK, XLF, XLE, SOXX
+
+## 빠른 시작
 
 ```bash
-# 패키지 설치
 npm install
-
-# 데이터 수집
-npm run update-data
-
-# 개발 서버 실행
+npm run update-data   # FRED에서 최신 데이터 수집
 npm run dev
-
-# 빌드
 npm run build
 ```
 
-## 📁 프로젝트 구조
+## 기술 스택
 
-자세한 구조는 [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)를 참고하세요.
+- React 19 + Vite
+- styled-components
+- 데이터 소스: FRED API
+- 자동 수집: GitHub Actions
+- 배포: GitHub Pages
 
-```
-src/
-├── config/           # 설정 (경제 지표 메타데이터)
-├── utils/            # 유틸리티 함수
-├── hooks/            # 커스텀 훅
-├── components/       # React 컴포넌트
-│   ├── DataCard/     # 차트 카드
-│   ├── SummarySection/  # 요약 섹션
-│   └── layout/       # 레이아웃
-├── pages/            # 페이지 컴포넌트
-└── styles/           # 전역 스타일
-```
+## 데이터 갱신 주기
 
-## 🔧 새로운 지표 추가하기
+매주 월요일 GitHub Actions가 `npm run update-data`를 실행하여 `public/data.json` 갱신.
 
-1. `src/config/seriesConfig.js`에 지표 설정 추가
-2. `scripts/update-data.js`에 FRED API 수집 설정 추가
-3. `npm run update-data` 실행
+## 라이선스
 
-자세한 방법은 [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md#-새로운-지표-추가-방법)를 참고하세요.
-
-## 🛠️ 기술 스택
-
-- **Framework**: React 18 + Vite
-- **Styling**: Styled Components
-- **Charts**: Recharts
-- **Data Source**: FRED API (Federal Reserve Economic Data)
-- **Deployment**: GitHub Pages
-- **CI/CD**: GitHub Actions
-
-## 📊 데이터 수집
-
-- **주기**: 매주 월요일 자동 수집
-- **방법**: GitHub Actions + FRED API
-- **저장**: `public/data.json`
-
-## 📈 Google Analytics
-
-방문자 통계를 Google Analytics 4로 추적합니다.
-- 측정 ID: G-M8HSLXGFMW
-
-## 🔍 SEO
-
-- Sitemap: `https://dhslrl321.github.io/sitemap.xml`
-- Robots.txt: 검색엔진 크롤링 허용
-- Structured Data: JSON-LD 스키마 적용
-
-## 📝 라이선스
-
-MIT License
-
-## 🤝 기여
-
-이슈 및 PR은 언제나 환영합니다!
-
-## ☕ 후원
-
-이 프로젝트가 도움이 되셨나요?
-[Buy me a coffee](https://buymeacoffee.com/dhslrl321)
-
-## 📧 문의
-
-dhslrl321@gmail.com
+MIT

@@ -1,6 +1,6 @@
 /**
  * FRED 데이터 수집 스크립트
- * 
+ *
  * 역할:
  * - FRED API에서 경제 지표 데이터 수집
  * - public/data.json에 저장
@@ -10,7 +10,11 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { FredApiClient } from './lib/fredApiClient.js';
-import { transformResultsToDataJson, calculateDataStatistics, printStatistics } from './lib/dataParser.js';
+import {
+  transformResultsToDataJson,
+  calculateDataStatistics,
+  printStatistics,
+} from './lib/dataParser.js';
 import { ensureFile, readJsonFile, writeJsonFile } from './lib/fileUtils.js';
 import { SERIES_TO_FETCH } from './config/seriesConfig.js';
 
@@ -52,14 +56,14 @@ async function main() {
   console.log('='.repeat(60));
 
   // 7. 실패한 시리즈가 있으면 경고
-  const failedCount = results.filter((r) => !r.success).length;
+  const failedCount = results.filter(r => !r.success).length;
   if (failedCount > 0) {
     console.warn(`\n⚠️  경고: ${failedCount}개의 시리즈 수집 실패`);
     process.exit(1);
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('\n❌ 스크립트 실행 중 오류 발생:');
   console.error(error);
   process.exit(1);

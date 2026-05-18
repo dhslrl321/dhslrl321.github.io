@@ -13,11 +13,11 @@ export function useEconomicData() {
       try {
         setLoading(true);
         const response = await fetch('/data.json', { cache: 'no-store' });
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const jsonData = await response.json();
         setData(jsonData);
         setError(null);
