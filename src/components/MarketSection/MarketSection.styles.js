@@ -97,6 +97,13 @@ export const Divider = styled.div`
   background: #e5e7eb;
 `;
 
+export const NoData = styled.div`
+  padding: 18px 0;
+  color: #9ca3af;
+  font-size: 13px;
+  margin-bottom: 8px;
+`;
+
 export const MetaRow = styled.div`
   display: flex;
   justify-content: space-between;

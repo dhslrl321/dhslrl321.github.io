@@ -4,6 +4,15 @@ export const Section = styled.section`
   margin-bottom: 48px;
 `;
 
+export const SectionHeader = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+`;
+
 export const SectionTitle = styled.h2`
   font-size: 22px;
   font-weight: 700;
@@ -14,7 +23,29 @@ export const SectionTitle = styled.h2`
 export const SectionDesc = styled.p`
   font-size: 13px;
   color: #6b7280;
-  margin-bottom: 16px;
+`;
+
+export const CompareButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    color: white;
+  }
 `;
 
 export const Grid = styled.div`

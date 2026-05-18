@@ -1,126 +1,134 @@
 /**
  * jamsil 사이트 콘텐츠 설정
- *
- * - macro: 매크로 지표 (FRED 월간/분기 발표)
- * - indices: 지수 (FRED daily, 전일/전주 % 표시)
- * - etfs: 대표 ETF (FRED 미수집, TradingView 링크만)
  */
 
 const fredUrl = id => `https://fred.stlouisfed.org/series/${id}`;
 const tvUrl = sym => `https://www.tradingview.com/symbols/${sym}/`;
 
+// ─────────────────────────────────────────────
+// 매크로 지표 (FRED)
+// ─────────────────────────────────────────────
 export const MACRO_INDICATORS = [
   {
-    seriesId: 'FEDFUNDS',
-    name: '연방기금금리',
+    seriesId: 'DGS2',
+    name: '2년 국채 금리',
     unit: '%',
     decimals: 2,
-    description:
-      'Fed가 설정하는 단기 정책금리. 통화정책의 방향(긴축/완화)을 가장 직접적으로 보여주는 지표.',
-    link: fredUrl('FEDFUNDS'),
+    description: '2년 만기 미국 국채 수익률. 단기 금리 정책 기대를 반영.',
+    link: fredUrl('DGS2'),
+  },
+  {
+    seriesId: 'DGS10',
+    name: '10년 국채 금리',
+    unit: '%',
+    decimals: 2,
+    description: '10년 만기 미국 국채 수익률. 장기 성장·물가 기대의 대표 지표.',
+    link: fredUrl('DGS10'),
+  },
+  {
+    seriesId: 'DGS30',
+    name: '30년 국채 금리',
+    unit: '%',
+    decimals: 2,
+    description: '30년 만기 미국 국채 수익률. 초장기 금리 추세를 보여줌.',
+    link: fredUrl('DGS30'),
   },
   {
     seriesId: 'T10Y2Y',
     name: '장단기 금리차 (10Y - 2Y)',
     unit: '%p',
     decimals: 2,
-    description:
-      '10년물에서 2년물 금리를 뺀 값. 음수 전환(역전)은 역사적으로 1~2년 내 경기 침체의 선행 지표로 작동.',
+    description: '10년물 - 2년물. 마이너스(역전)는 경기침체 선행 신호로 작동해왔음.',
     link: fredUrl('T10Y2Y'),
   },
   {
-    seriesId: 'CPIAUCSL',
-    name: '소비자물가지수 (CPI)',
-    unit: '',
-    decimals: 2,
-    description:
-      '미국 도시 소비자가 구매하는 상품·서비스의 평균 가격 변화. 인플레이션 측정의 대표 지표.',
-    link: fredUrl('CPIAUCSL'),
-  },
-  {
-    seriesId: 'CPILFESL',
-    name: '근원 CPI (Core CPI)',
-    unit: '',
-    decimals: 2,
-    description:
-      '식품·에너지를 제외한 CPI. 변동성이 큰 항목을 빼서 안정적인 인플레이션 추세를 보여줌. Fed가 중요시함.',
-    link: fredUrl('CPILFESL'),
-  },
-  {
-    seriesId: 'PAYEMS',
-    name: '비농업 고용자수 (NFP)',
-    unit: '천명',
-    decimals: 0,
-    description:
-      '미국 비농업 부문의 총 고용자 수. 매월 첫째 금요일 발표. 노동시장의 건강도를 측정.',
-    link: fredUrl('PAYEMS'),
-  },
-  {
-    seriesId: 'UNRATE',
-    name: '실업률',
+    seriesId: 'BAMLH0A0HYM2',
+    name: 'High Yield 스프레드',
     unit: '%',
-    decimals: 1,
-    description: '경제활동인구 중 실업자 비율. 4% 이하면 완전고용 상태로 간주. 급상승은 침체 신호.',
-    link: fredUrl('UNRATE'),
+    decimals: 2,
+    description: 'ICE BofA US High Yield 채권의 옵션조정 스프레드. 신용 위험·시장 스트레스의 핵심 지표.',
+    link: fredUrl('BAMLH0A0HYM2'),
+  },
+  {
+    seriesId: 'KCFSI',
+    name: 'KCFSI (캔자스시티 금융스트레스)',
+    unit: '',
+    decimals: 2,
+    description: '캔자스시티 연은의 금융시장 스트레스 지수. 0 이상이면 평균 이상의 스트레스.',
+    link: fredUrl('KCFSI'),
+  },
+  {
+    seriesId: 'DCOILWTICO',
+    name: 'WTI 원유 가격',
+    unit: '$',
+    decimals: 2,
+    description: 'WTI 원유 현물 가격(달러/배럴). 글로벌 인플레와 수요 동향의 선행 지표.',
+    link: fredUrl('DCOILWTICO'),
   },
 ];
 
-export const MARKET_INDICES = [
+// 매크로 비교 차트 (한 번에 다 보기)
+export const MACRO_COMPARE_URL = `https://fred.stlouisfed.org/graph/?id=${MACRO_INDICATORS.map(m => m.seriesId).join(',')}`;
+
+// ─────────────────────────────────────────────
+// 시장 (지수 + ETF + 외부 지표)
+// FRED 데이터 있으면 전일/전주 % 표시, 없으면 링크만
+// ─────────────────────────────────────────────
+export const MARKET_ITEMS = [
   {
-    seriesId: 'SP500',
-    name: 'S&P 500',
-    unit: '',
-    decimals: 2,
-    link: tvUrl('SP-SPX'),
+    id: 'FEAR_GREED',
+    name: '공포 & 탐욕 지수',
+    note: 'CNN',
+    link: 'https://www.cnn.com/markets/fear-and-greed',
+    fredSeriesId: null,
   },
   {
-    seriesId: 'NASDAQCOM',
-    name: 'NASDAQ Composite',
-    unit: '',
-    decimals: 2,
-    link: tvUrl('NASDAQ-IXIC'),
-  },
-  {
-    seriesId: 'DJIA',
-    name: 'Dow Jones',
-    unit: '',
-    decimals: 2,
-    link: tvUrl('DJ-DJI'),
-  },
-  {
-    seriesId: 'VIXCLS',
+    id: 'VIX',
     name: 'VIX 변동성지수',
-    unit: '',
-    decimals: 2,
+    note: 'VIXCLS',
     link: tvUrl('TVC-VIX'),
+    fredSeriesId: 'VIXCLS',
   },
   {
-    seriesId: 'DGS10',
-    name: '10Y 국채 금리',
-    unit: '%',
-    decimals: 2,
-    link: tvUrl('TVC-TNX'),
+    id: 'SP500',
+    name: 'S&P 500',
+    note: 'SP500',
+    link: tvUrl('SP-SPX'),
+    fredSeriesId: 'SP500',
   },
   {
-    seriesId: 'DTWEXBGS',
-    name: '달러 인덱스 (DXY)',
-    unit: '',
-    decimals: 2,
-    link: tvUrl('TVC-DXY'),
+    id: 'QQQ',
+    name: 'QQQ (NASDAQ-100 ETF)',
+    note: 'NASDAQ-100',
+    link: tvUrl('NASDAQ-QQQ'),
+    fredSeriesId: null,
   },
-];
-
-export const MARKET_ETFS = [
-  { ticker: 'SPY', name: 'S&P 500 ETF', link: tvUrl('AMEX-SPY') },
-  { ticker: 'QQQ', name: 'NASDAQ-100 ETF', link: tvUrl('NASDAQ-QQQ') },
-  { ticker: 'DIA', name: 'Dow ETF', link: tvUrl('AMEX-DIA') },
-  { ticker: 'IWM', name: 'Russell 2000 ETF (중소형주)', link: tvUrl('AMEX-IWM') },
-  { ticker: 'TLT', name: '20+년 장기 국채 ETF', link: tvUrl('NASDAQ-TLT') },
-  { ticker: 'HYG', name: '하이일드 회사채 ETF', link: tvUrl('AMEX-HYG') },
-  { ticker: 'GLD', name: '금 ETF', link: tvUrl('AMEX-GLD') },
-  { ticker: 'USO', name: '원유 ETF (WTI)', link: tvUrl('AMEX-USO') },
-  { ticker: 'XLK', name: '기술주 섹터 ETF', link: tvUrl('AMEX-XLK') },
-  { ticker: 'XLF', name: '금융주 섹터 ETF', link: tvUrl('AMEX-XLF') },
-  { ticker: 'XLE', name: '에너지 섹터 ETF', link: tvUrl('AMEX-XLE') },
-  { ticker: 'SOXX', name: '반도체 ETF', link: tvUrl('NASDAQ-SOXX') },
+  {
+    id: 'XLP',
+    name: 'XLP (필수소비재 ETF)',
+    note: 'Consumer Staples',
+    link: tvUrl('AMEX-XLP'),
+    fredSeriesId: null,
+  },
+  {
+    id: 'XLY',
+    name: 'XLY (임의소비재 ETF)',
+    note: 'Consumer Discretionary',
+    link: tvUrl('AMEX-XLY'),
+    fredSeriesId: null,
+  },
+  {
+    id: 'RSHB',
+    name: 'RSHB',
+    note: 'ETF',
+    link: tvUrl('RSHB'),
+    fredSeriesId: null,
+  },
+  {
+    id: 'RSLV',
+    name: 'RSLV',
+    note: 'ETF',
+    link: tvUrl('RSLV'),
+    fredSeriesId: null,
+  },
 ];

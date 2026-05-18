@@ -1,7 +1,6 @@
 import * as S from './Dashboard.styles';
 import MacroSection from '../components/MacroSection/MacroSection.jsx';
 import MarketSection from '../components/MarketSection/MarketSection.jsx';
-import EtfSection from '../components/EtfSection/EtfSection.jsx';
 import { useEconomicData } from '../hooks/useEconomicData';
 
 function LoadingState() {
@@ -46,7 +45,6 @@ export default function Dashboard() {
 
       <MacroSection data={data} />
       <MarketSection data={data} />
-      <EtfSection />
     </S.Container>
   );
 }
