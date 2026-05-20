@@ -138,6 +138,46 @@ export const PeriodInfo = styled.div`
   font-family: ui-monospace, SFMono-Regular, monospace;
 `;
 
+const level = {
+  good: { fg: '#3fb950', bg: 'rgba(63, 185, 80, 0.12)', bd: 'rgba(63, 185, 80, 0.35)' },
+  warn: { fg: '#d29922', bg: 'rgba(210, 153, 34, 0.12)', bd: 'rgba(210, 153, 34, 0.35)' },
+  bad: { fg: '#ff7b72', bg: 'rgba(255, 123, 114, 0.12)', bd: 'rgba(255, 123, 114, 0.35)' },
+};
+
+export const VerdictGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+export const VerdictCard = styled.div`
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: ${p => level[p.$level].bg};
+  border: 1px solid ${p => level[p.$level].bd};
+`;
+
+export const VerdictLabel = styled.div`
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+`;
+
+export const VerdictValue = styled.div`
+  font-size: 20px;
+  font-weight: 800;
+  color: ${p => level[p.$level].fg};
+  font-variant-numeric: tabular-nums;
+`;
+
+export const VerdictDetail = styled.div`
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+`;
+
 export const ChartLegend = styled.div`
   display: flex;
   gap: 16px;

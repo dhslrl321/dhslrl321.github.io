@@ -53,9 +53,12 @@ export function computeDrawdown(series) {
     return { date: point.date, value: point.value, drawdown };
   });
 
+  const currentDrawdown = underwater.length ? underwater[underwater.length - 1].drawdown : 0;
+
   return {
     underwater,
     mddPct,
+    currentDrawdown,
     peakDate: mddPeakDate,
     troughDate,
     peakValue: mddPeakValue,

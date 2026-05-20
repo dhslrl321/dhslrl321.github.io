@@ -16,6 +16,7 @@ import { FX_USDKRW_SYMBOL } from '../../config/seriesConfig';
 import { fetchDailySeries } from '../../utils/yahooClient';
 import { fetchShortInterest, fetchQuoteStats } from '../../utils/nasdaqClient';
 import { computeDrawdown } from '../../utils/mdd';
+import { buildVerdicts } from '../../utils/verdict';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -50,6 +51,7 @@ export default function MddSection() {
   const [shortInterest, setShortInterest] = useState(null); // { rows } | { error }
   const [stats, setStats] = useState(null); // { marketCap, price, sharesOutstanding }
   const [fxRate, setFxRate] = useState(null); // 원/달러
+  const [vix, setVix] = useState(null); // 시장 리스크 지표
 
   useEffect(() => {
     fetchDailySeries(FX_USDKRW_SYMBOL, { range: '5d' })
@@ -57,6 +59,12 @@ export default function MddSection() {
         if (s.length) setFxRate(s[s.length - 1].value);
       })
       .catch(() => setFxRate(null));
+
+    fetchDailySeries('^VIX', { range: '5d' })
+      .then(s => {
+        if (s.length) setVix(s[s.length - 1].value);
+      })
+      .catch(() => setVix(null));
   }, []);
 
   const run = async () => {
@@ -115,6 +123,8 @@ export default function MddSection() {
   const shortPct = sharesOut && latestSI ? (latestSI / sharesOut) * 100 : null;
   const shortValue = statsData?.price && latestSI ? latestSI * statsData.price : null;
 
+  const verdicts = dd ? buildVerdicts({ dd, stats: statsData, shortPct, vix }) : [];
+
   return (
     <S.Section>
       <S.SectionTitle>티커 분석 · MDD & 공매도</S.SectionTitle>
@@ -166,6 +176,18 @@ export default function MddSection() {
               {dd.troughValue?.toFixed(2)})
             </S.PeriodInfo>
           </S.ResultHeader>
+
+          {verdicts.length > 0 && (
+            <S.VerdictGrid>
+              {verdicts.map(v => (
+                <S.VerdictCard key={v.key} $level={v.level}>
+                  <S.VerdictLabel>{v.label}</S.VerdictLabel>
+                  <S.VerdictValue $level={v.level}>{v.value}</S.VerdictValue>
+                  <S.VerdictDetail>{v.detail}</S.VerdictDetail>
+                </S.VerdictCard>
+              ))}
+            </S.VerdictGrid>
+          )}
 
           <S.ChartLegend>
             <S.LegendItem $color="#58a6ff">가격</S.LegendItem>

@@ -54,5 +54,15 @@ export async function fetchQuoteStats(symbol) {
   const price = parseNum(info?.data?.primaryData?.lastSalePrice);
   const sharesOutstanding = marketCap && price ? marketCap / price : null;
 
-  return { marketCap, price, sharesOutstanding };
+  // "$236.54/$129.16" → high/low
+  let week52High = null;
+  let week52Low = null;
+  const range52 = summary?.data?.summaryData?.FiftTwoWeekHighLow?.value;
+  if (range52 && range52.includes('/')) {
+    const [h, l] = range52.split('/');
+    week52High = parseNum(h);
+    week52Low = parseNum(l);
+  }
+
+  return { marketCap, price, sharesOutstanding, week52High, week52Low };
 }
