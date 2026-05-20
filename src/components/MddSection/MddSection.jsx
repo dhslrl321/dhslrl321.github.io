@@ -102,6 +102,7 @@ export default function MddSection() {
       ? parseInterest(shortInterest.rows[0].interest)
       : null;
   const shortPct = sharesOut && latestSI ? (latestSI / sharesOut) * 100 : null;
+  const shortValue = stats?.price && latestSI ? latestSI * stats.price : null;
 
   return (
     <S.Section>
@@ -258,6 +259,12 @@ export default function MddSection() {
             <S.StatItem>
               <S.StatLabel>공매도 비중 (최근)</S.StatLabel>
               <S.StatValue>{shortPct.toFixed(2)}%</S.StatValue>
+            </S.StatItem>
+          )}
+          {shortValue != null && (
+            <S.StatItem>
+              <S.StatLabel>공매도 액수 (최근 × 현재가)</S.StatLabel>
+              <S.StatValue>${abbr(shortValue)}</S.StatValue>
             </S.StatItem>
           )}
         </S.StatRow>
