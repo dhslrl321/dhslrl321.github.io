@@ -1,7 +1,9 @@
 import * as S from './MacroSection.styles';
 import { MACRO_INDICATORS, MACRO_COMPARE_URL } from '../../config/seriesConfig';
-import { calculateMacroChange } from '../../utils/changeCalculator';
+import { calcMacro } from '../../utils/changeCalculator';
 import { formatKoreanDate } from '../../utils/dateFormatter';
+import { fetchFredSeries } from '../../utils/fredClient';
+import { useSeriesMap } from '../../hooks/useSeriesMap';
 
 function formatValue(value, decimals) {
   if (value == null || isNaN(value)) return '—';
@@ -11,16 +13,9 @@ function formatValue(value, decimals) {
   });
 }
 
-function formatAbsChange(change, decimals) {
-  if (change == null || isNaN(change)) return null;
-  return Math.abs(change).toLocaleString('en-US', {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
-}
-
-function MacroCard({ indicator, observations }) {
-  const stat = calculateMacroChange(observations);
+function MacroCard({ indicator, result }) {
+  const stat = result?.data ? calcMacro(result.data) : null;
+  const error = result?.error;
 
   return (
     <S.Card href={indicator.link} target="_blank" rel="noopener noreferrer">
@@ -37,13 +32,15 @@ function MacroCard({ indicator, observations }) {
         {stat?.absChange != null && (
           <S.Change $positive={stat.absChange > 0} $negative={stat.absChange < 0}>
             {stat.absChange > 0 ? '▲' : stat.absChange < 0 ? '▼' : '―'}{' '}
-            {formatAbsChange(stat.absChange, indicator.decimals)}
+            {formatValue(Math.abs(stat.absChange), indicator.decimals)}
           </S.Change>
         )}
       </S.ValueRow>
 
       <S.MetaRow>
-        <S.Date>{stat?.latestDate ? formatKoreanDate(stat.latestDate) : '—'}</S.Date>
+        <S.Date>
+          {error ? '불러오기 실패' : stat?.latestDate ? formatKoreanDate(stat.latestDate) : '—'}
+        </S.Date>
         <S.LinkHint>FRED ↗</S.LinkHint>
       </S.MetaRow>
 
@@ -52,13 +49,22 @@ function MacroCard({ indicator, observations }) {
   );
 }
 
-export default function MacroSection({ data }) {
+export default function MacroSection() {
+  const { map } = useSeriesMap(
+    MACRO_INDICATORS.map(ind => ({
+      key: ind.seriesId,
+      load: () => fetchFredSeries(ind.seriesId),
+    }))
+  );
+
   return (
     <S.Section>
       <S.SectionHeader>
         <div>
           <S.SectionTitle>매크로 지표</S.SectionTitle>
-          <S.SectionDesc>국채 금리 곡선, 신용 스프레드, 금융 스트레스, 원유.</S.SectionDesc>
+          <S.SectionDesc>
+            국채 금리 곡선, 신용 스프레드, 금융 스트레스, 원유. (실시간 · 1시간 캐시)
+          </S.SectionDesc>
         </div>
         <S.CompareButton href={MACRO_COMPARE_URL} target="_blank" rel="noopener noreferrer">
           📊 비교 차트로 보기 ↗
@@ -66,11 +72,7 @@ export default function MacroSection({ data }) {
       </S.SectionHeader>
       <S.Grid>
         {MACRO_INDICATORS.map(ind => (
-          <MacroCard
-            key={ind.seriesId}
-            indicator={ind}
-            observations={data[ind.seriesId]?.payload?.observations}
-          />
+          <MacroCard key={ind.seriesId} indicator={ind} result={map[ind.seriesId]} />
         ))}
       </S.Grid>
     </S.Section>

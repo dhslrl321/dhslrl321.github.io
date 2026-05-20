@@ -29,17 +29,25 @@ npm run dev
 npm run build
 ```
 
+## 데이터 (실시간)
+
+- **시장 / MDD**: Yahoo Finance chart API
+- **매크로**: FRED API
+- 둘 다 브라우저에서 직접 호출 시 CORS에 막히므로 **Cloudflare Worker 프록시**를 경유한다.
+- 응답은 `localStorage` 기반 **1시간 TTL 캐시** + 메모리 캐시로 보관 (새로고침해도 1시간 내 재요청 없음).
+
+### Cloudflare Worker 프록시
+
+`src/config/proxy.js`의 `CLOUDFLARE_WORKER_URL`에 배포한 Worker 주소를 넣는다.
+Worker 코드는 `?url=` 쿼리로 받은 대상 URL을 그대로 fetch해 `access-control-allow-origin: *`를 붙여 반환한다.
+
 ## 기술 스택
 
 - React 19 + Vite
 - styled-components
-- 데이터 소스: FRED API
-- 자동 수집: GitHub Actions
-- 배포: GitHub Pages
-
-## 데이터 갱신 주기
-
-매주 월요일 GitHub Actions가 `npm run update-data`를 실행하여 `public/data.json` 갱신.
+- Recharts (MDD underwater 차트)
+- 데이터: Yahoo Finance + FRED (Cloudflare Worker 프록시 경유)
+- 배포: GitHub Pages (main 브랜치 push 시 자동)
 
 ## 라이선스
 

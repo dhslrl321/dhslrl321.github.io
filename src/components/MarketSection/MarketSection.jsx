@@ -1,6 +1,8 @@
 import * as S from './MarketSection.styles';
 import { MARKET_ITEMS } from '../../config/seriesConfig';
-import { calculateDailyWeeklyChange } from '../../utils/changeCalculator';
+import { calcDailyWeekly } from '../../utils/changeCalculator';
+import { fetchDailySeries } from '../../utils/yahooClient';
+import { useSeriesMap } from '../../hooks/useSeriesMap';
 
 function formatPct(value) {
   if (value == null || isNaN(value)) return '—';
@@ -8,11 +10,12 @@ function formatPct(value) {
   return `${sign}${value.toFixed(2)}%`;
 }
 
-function MarketCard({ item, observations }) {
-  const stat = observations ? calculateDailyWeeklyChange(observations) : null;
+function MarketCard({ item, result }) {
+  const stat = result?.data ? calcDailyWeekly(result.data) : null;
+  const error = result?.error;
+  const hasData = stat != null;
   const day = stat?.dayChangePct;
   const week = stat?.weekChangePct;
-  const hasData = stat != null;
 
   return (
     <S.Card href={item.link} target="_blank" rel="noopener noreferrer">
@@ -38,33 +41,36 @@ function MarketCard({ item, observations }) {
           </S.ChangeBlock>
         </S.ChangesRow>
       ) : (
-        <S.NoData>외부 사이트에서 확인 →</S.NoData>
+        <S.NoData>
+          {error ? '불러오기 실패' : item.yahooSymbol ? '불러오는 중…' : '외부 사이트에서 확인 →'}
+        </S.NoData>
       )}
 
       <S.MetaRow>
         <S.MetaText>{hasData ? `최신: ${stat.latestDate}` : ''}</S.MetaText>
-        <S.LinkHint>
-          {item.id === 'FEAR_GREED' ? 'CNN' : 'TradingView'} ↗
-        </S.LinkHint>
+        <S.LinkHint>{item.id === 'FEAR_GREED' ? 'CNN' : 'TradingView'} ↗</S.LinkHint>
       </S.MetaRow>
     </S.Card>
   );
 }
 
-export default function MarketSection({ data }) {
+export default function MarketSection() {
+  const { map } = useSeriesMap(
+    MARKET_ITEMS.filter(it => it.yahooSymbol).map(it => ({
+      key: it.id,
+      load: () => fetchDailySeries(it.yahooSymbol, { range: '1mo' }),
+    }))
+  );
+
   return (
     <S.Section>
       <S.SectionTitle>주식 시장</S.SectionTitle>
       <S.SectionDesc>
-        FRED daily 데이터가 있으면 전일/전주 % 표시. 카드 클릭 시 외부 차트로 이동.
+        전일/전주 % 는 실시간 (1시간 캐시). 카드 클릭 시 외부 차트로 이동.
       </S.SectionDesc>
       <S.Grid>
         {MARKET_ITEMS.map(item => (
-          <MarketCard
-            key={item.id}
-            item={item}
-            observations={item.fredSeriesId ? data[item.fredSeriesId]?.payload?.observations : null}
-          />
+          <MarketCard key={item.id} item={item} result={map[item.id]} />
         ))}
       </S.Grid>
     </S.Section>
