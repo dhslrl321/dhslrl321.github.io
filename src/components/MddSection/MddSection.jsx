@@ -168,8 +168,8 @@ export default function MddSection() {
           </S.ResultHeader>
 
           <S.ChartLegend>
-            <S.LegendItem $color="#2563eb">가격</S.LegendItem>
-            <S.LegendItem $color="#dc2626">낙폭(%)</S.LegendItem>
+            <S.LegendItem $color="#58a6ff">가격</S.LegendItem>
+            <S.LegendItem $color="#ff7b72">낙폭(%)</S.LegendItem>
           </S.ChartLegend>
           <S.ChartBox>
             <ResponsiveContainer width="100%" height="100%">
@@ -179,22 +179,22 @@ export default function MddSection() {
               >
                 <defs>
                   <linearGradient id="ddFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#dc2626" stopOpacity={0.04} />
-                    <stop offset="100%" stopColor="#dc2626" stopOpacity={0.3} />
+                    <stop offset="0%" stopColor="#ff7b72" stopOpacity={0.04} />
+                    <stop offset="100%" stopColor="#ff7b72" stopOpacity={0.3} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#eef0f4" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
                 <XAxis
                   dataKey="date"
                   tickFormatter={formatTick}
-                  stroke="#9ca3af"
+                  stroke="#6e7681"
                   style={{ fontSize: 11 }}
                   minTickGap={48}
                 />
                 <YAxis
                   yAxisId="price"
                   orientation="left"
-                  stroke="#2563eb"
+                  stroke="#58a6ff"
                   style={{ fontSize: 11 }}
                   domain={['auto', 'auto']}
                   width={56}
@@ -202,14 +202,20 @@ export default function MddSection() {
                 <YAxis
                   yAxisId="dd"
                   orientation="right"
-                  stroke="#dc2626"
+                  stroke="#ff7b72"
                   style={{ fontSize: 11 }}
                   width={48}
                   tickFormatter={v => `${v.toFixed(0)}%`}
                   domain={['auto', 0]}
                 />
                 <Tooltip
-                  labelStyle={{ color: '#6b7280' }}
+                  contentStyle={{
+                    background: '#161b22',
+                    border: '1px solid #2a2f3a',
+                    borderRadius: 8,
+                  }}
+                  labelStyle={{ color: '#9aa4b2' }}
+                  itemStyle={{ color: '#e6edf3' }}
                   formatter={(v, name) =>
                     name === 'drawdown' ? [`${v.toFixed(2)}%`, '낙폭'] : [v.toFixed(2), '가격']
                   }
@@ -218,7 +224,7 @@ export default function MddSection() {
                   yAxisId="dd"
                   type="monotone"
                   dataKey="drawdown"
-                  stroke="#dc2626"
+                  stroke="#ff7b72"
                   strokeWidth={1.3}
                   fill="url(#ddFill)"
                 />
@@ -226,7 +232,7 @@ export default function MddSection() {
                   yAxisId="price"
                   type="monotone"
                   dataKey="value"
-                  stroke="#2563eb"
+                  stroke="#58a6ff"
                   strokeWidth={1.6}
                   dot={false}
                 />
@@ -237,7 +243,7 @@ export default function MddSection() {
                     y={dd.peakValue}
                     r={4}
                     fill="#16a34a"
-                    stroke="white"
+                    stroke="#161b22"
                   />
                 )}
                 {dd.troughDate && (
@@ -246,8 +252,8 @@ export default function MddSection() {
                     x={dd.troughDate}
                     y={dd.troughValue}
                     r={4}
-                    fill="#dc2626"
-                    stroke="white"
+                    fill="#ff7b72"
+                    stroke="#161b22"
                   />
                 )}
               </ComposedChart>

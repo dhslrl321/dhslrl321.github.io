@@ -13,8 +13,8 @@ const Spinner = styled.span`
   display: inline-block;
   width: ${p => p.$size || '18px'};
   height: ${p => p.$size || '18px'};
-  border: 2px solid ${p => (p.$light ? 'rgba(255,255,255,0.4)' : '#e5e7eb')};
-  border-top-color: ${p => (p.$light ? '#ffffff' : '#2563eb')};
+  border: 2px solid ${p => (p.$light ? 'rgba(255,255,255,0.4)' : '#2a2f3a')};
+  border-top-color: ${p => (p.$light ? '#ffffff' : '#58a6ff')};
   border-radius: 50%;
   animation: ${spin} 0.7s linear infinite;
 `;

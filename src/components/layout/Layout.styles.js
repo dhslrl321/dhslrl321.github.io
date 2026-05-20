@@ -27,7 +27,7 @@ export const Title = styled.h1`
   font-weight: 800;
   margin: 0;
   letter-spacing: -0.5px;
-  color: #1a1d23;
+  color: var(--text);
 
   @media (max-width: 768px) {
     font-size: 26px;
@@ -36,7 +36,7 @@ export const Title = styled.h1`
 
 export const Tagline = styled.p`
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-2);
   margin-top: 6px;
 
   @media (max-width: 768px) {

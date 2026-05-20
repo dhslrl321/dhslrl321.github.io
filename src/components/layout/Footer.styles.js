@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border);
   padding: 24px 0;
   margin-top: 60px;
 `;
@@ -21,7 +21,7 @@ export const FooterContent = styled.div`
 
 export const Copyright = styled.div`
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-2);
 `;
 
 export const RightSection = styled.div`
@@ -38,16 +38,16 @@ export const RightSection = styled.div`
 
 export const Contact = styled.div`
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-2);
 `;
 
 export const EmailLink = styled.a`
-  color: #2563eb;
+  color: var(--accent);
   text-decoration: none;
   transition: color 0.2s;
 
   &:hover {
-    color: #1d4ed8;
+    color: var(--text);
     text-decoration: underline;
   }
 `;

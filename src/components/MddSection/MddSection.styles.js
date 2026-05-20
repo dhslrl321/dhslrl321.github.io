@@ -7,13 +7,13 @@ export const Section = styled.section`
 export const SectionTitle = styled.h2`
   font-size: 22px;
   font-weight: 700;
-  color: #1a1d23;
+  color: var(--text);
   margin-bottom: 4px;
 `;
 
 export const SectionDesc = styled.p`
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-2);
   margin-bottom: 16px;
 `;
 
@@ -23,8 +23,8 @@ export const Form = styled.form`
   gap: 12px;
   flex-wrap: wrap;
   padding: 16px;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 12px;
   margin-bottom: 16px;
 `;
@@ -37,7 +37,7 @@ export const Field = styled.div`
 
 export const Label = styled.label`
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-2);
   font-weight: 500;
 `;
 
@@ -46,16 +46,21 @@ export const Input = styled.input`
   padding: 0 12px;
   width: ${p => p.$width || 'auto'};
   font-size: 14px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: white;
-  color: #1a1d23;
+  background: var(--bg-elev);
+  color: var(--text);
   font-family: inherit;
+  color-scheme: dark;
+
+  &::placeholder {
+    color: var(--text-3);
+  }
 
   &:focus {
     outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
   }
 `;
 
@@ -66,7 +71,7 @@ export const SubmitButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #2563eb;
+  background: var(--accent-strong);
   color: white;
   font-size: 14px;
   font-weight: 600;
@@ -76,7 +81,7 @@ export const SubmitButton = styled.button`
   transition: background 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: #1d4ed8;
+    background: var(--accent);
   }
 
   &:disabled {
@@ -87,10 +92,10 @@ export const SubmitButton = styled.button`
 
 export const ErrorBox = styled.div`
   padding: 12px 16px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: rgba(255, 123, 114, 0.12);
+  border: 1px solid rgba(255, 123, 114, 0.4);
   border-radius: 8px;
-  color: #dc2626;
+  color: #ff7b72;
   font-size: 14px;
   margin-bottom: 16px;
 `;
@@ -106,14 +111,15 @@ export const ResultHeader = styled.div`
 export const ResultSymbol = styled.div`
   font-size: 20px;
   font-weight: 700;
-  color: #1a1d23;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, monospace;
 `;
 
 export const MddBadge = styled.div`
   font-size: 14px;
-  color: #991b1b;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  color: #ff7b72;
+  background: rgba(255, 123, 114, 0.14);
+  border: 1px solid rgba(255, 123, 114, 0.35);
   padding: 6px 12px;
   border-radius: 8px;
 
@@ -121,13 +127,15 @@ export const MddBadge = styled.div`
     font-size: 18px;
     font-weight: 700;
     margin-left: 4px;
+    font-variant-numeric: tabular-nums;
   }
 `;
 
 export const PeriodInfo = styled.div`
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-2);
   font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, monospace;
 `;
 
 export const ChartLegend = styled.div`
@@ -140,7 +148,7 @@ export const LegendItem = styled.span`
   display: inline-flex;
   align-items: center;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-2);
 
   &::before {
     content: '';
@@ -155,8 +163,8 @@ export const LegendItem = styled.span`
 export const ChartBox = styled.div`
   width: 100%;
   height: 380px;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 8px 8px 0 0;
 `;
@@ -172,27 +180,28 @@ export const StatItem = styled.div`
   flex: 1;
   min-width: 140px;
   padding: 14px 16px;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 12px;
 `;
 
 export const StatLabel = styled.div`
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-2);
   margin-bottom: 6px;
 `;
 
 export const StatValue = styled.div`
   font-size: 20px;
   font-weight: 700;
-  color: #1a1d23;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, monospace;
 `;
 
 export const StatSub = styled.div`
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-2);
   margin-top: 2px;
   font-variant-numeric: tabular-nums;
 `;
@@ -211,20 +220,20 @@ export const ShortBlock = styled.div`
 export const ShortTitle = styled.h3`
   font-size: 16px;
   font-weight: 700;
-  color: #1a1d23;
+  color: var(--text);
   margin-bottom: 10px;
 `;
 
 export const ShortNote = styled.p`
   font-size: 13px;
-  color: #9ca3af;
+  color: var(--text-3);
 `;
 
 export const TableWrap = styled.div`
   overflow-x: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: white;
+  background: var(--card);
 `;
 
 export const Table = styled.table`
@@ -232,6 +241,7 @@ export const Table = styled.table`
   border-collapse: collapse;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, monospace;
 
   th,
   td {
@@ -246,17 +256,17 @@ export const Table = styled.table`
   }
 
   thead th {
-    background: #f9fafb;
-    color: #6b7280;
+    background: var(--bg-elev);
+    color: var(--text-2);
     font-weight: 600;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border);
   }
 
   tbody tr + tr td {
-    border-top: 1px solid #f3f4f6;
+    border-top: 1px solid var(--border-soft);
   }
 
   tbody td {
-    color: #1a1d23;
+    color: var(--text);
   }
 `;

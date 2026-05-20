@@ -1,7 +1,26 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-    /* Reset */
+    :root {
+        --bg: #0d1117;
+        --bg-elev: #11161e;
+        --card: #161b22;
+        --card-hover: #1c232d;
+        --border: #2a2f3a;
+        --border-soft: #21262d;
+        --text: #e6edf3;
+        --text-2: #9aa4b2;
+        --text-3: #6e7681;
+        --accent: #58a6ff;
+        --accent-strong: #1f6feb;
+        --up: #ff7b72;        /* 상승 (한국식 빨강) */
+        --up-bg: rgba(255, 123, 114, 0.14);
+        --down: #58a6ff;      /* 하락 (파랑) */
+        --down-bg: rgba(88, 166, 255, 0.14);
+        --flat: #8b949e;
+        --flat-bg: #21262d;
+    }
+
     *, *::before, *::after {
         box-sizing: border-box;
     }
@@ -12,22 +31,18 @@ export const GlobalStyle = createGlobalStyle`
         height: 100%;
     }
 
-    /* 기본 폰트 + 전체 무드 */
     body {
-        font-family: -apple-system, BlinkMacSystemFont, BlinkMacSystemFont,
-        "Pretendard", system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
-
-        background-color: #f5f7fb;  /* 토스 느낌의 밝고 깨끗한 배경 */
-        color: #1a1d23;             /* 진하고 선명한 텍스트 색 */
-
+        font-family: -apple-system, BlinkMacSystemFont, "Pretendard", system-ui,
+            "Segoe UI", Helvetica, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
         -webkit-font-smoothing: antialiased;
     }
 
-    /* headings 기본 세팅 */
     h1, h2, h3, h4, h5 {
         margin: 0;
-        font-weight: 600;
-        color: #1a1d23;
+        font-weight: 700;
+        color: var(--text);
     }
 
     p {
@@ -37,16 +52,21 @@ export const GlobalStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
-        color: #2563eb;   /* 밝은 블루 포인트 */
+        color: var(--accent);
     }
 
-    /* 가벼운 스크롤바 스타일 */
     ::-webkit-scrollbar {
-        width: 8px;
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--bg);
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #d4d8e0;
-        border-radius: 4px;
+        background: #2a2f3a;
+        border-radius: 5px;
+        border: 2px solid var(--bg);
     }
 `;

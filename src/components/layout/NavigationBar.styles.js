@@ -4,7 +4,7 @@ export const Nav = styled.nav`
   display: flex;
   gap: 20px;
   padding: 14px 0;
-  border-bottom: 1px solid #e1e4eb;
+  border-bottom: 1px solid var(--border);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 
@@ -21,9 +21,9 @@ export const Nav = styled.nav`
 `;
 
 export const NavItem = styled.button`
-  color: #6b7280;
+  color: var(--text-2);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0 0 6px;
   transition: color 0.15s ease;
   cursor: pointer;
@@ -39,12 +39,12 @@ export const NavItem = styled.button`
   }
 
   &:hover {
-    color: #2563eb;
+    color: var(--text);
   }
 
   &.active {
-    color: #2563eb;
-    border-bottom: 2px solid #2563eb;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
   }
 `;
 

@@ -7,13 +7,13 @@ export const Section = styled.section`
 export const SectionTitle = styled.h2`
   font-size: 22px;
   font-weight: 700;
-  color: #1a1d23;
+  color: var(--text);
   margin-bottom: 4px;
 `;
 
 export const SectionDesc = styled.p`
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-2);
   margin-bottom: 16px;
 `;
 
@@ -27,20 +27,20 @@ export const Card = styled.a`
   display: flex;
   flex-direction: column;
   padding: 18px;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
   transition:
     transform 0.15s ease,
-    box-shadow 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    background 0.15s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-    border-color: #c7d2fe;
+    background: var(--card-hover);
+    border-color: var(--accent);
   }
 `;
 
@@ -54,12 +54,12 @@ export const CardHeader = styled.div`
 export const Name = styled.div`
   font-size: 15px;
   font-weight: 600;
-  color: #1a1d23;
+  color: var(--text);
 `;
 
 export const SeriesId = styled.div`
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-3);
   font-family: ui-monospace, SFMono-Regular, monospace;
 `;
 
@@ -80,13 +80,13 @@ export const ChangeBlock = styled.div`
 
 export const ChangeLabel = styled.div`
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-3);
 `;
 
 const dirColor = {
-  up: { fg: '#dc2626', bg: '#fef2f2' },
-  down: { fg: '#2563eb', bg: '#eff6ff' },
-  flat: { fg: '#6b7280', bg: '#f3f4f6' },
+  up: { fg: '#ff7b72', bg: 'rgba(255, 123, 114, 0.14)' },
+  down: { fg: '#58a6ff', bg: 'rgba(88, 166, 255, 0.14)' },
+  flat: { fg: '#8b949e', bg: '#21262d' },
 };
 
 export const Pill = styled.div`
@@ -99,6 +99,7 @@ export const Pill = styled.div`
   font-size: 16px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, monospace;
   color: ${p => dirColor[p.$dir].fg};
   background: ${p => dirColor[p.$dir].bg};
 
@@ -109,7 +110,7 @@ export const Pill = styled.div`
 
 export const NoData = styled.div`
   padding: 18px 0;
-  color: #9ca3af;
+  color: var(--text-3);
   font-size: 13px;
   margin-bottom: 8px;
 `;
@@ -126,18 +127,18 @@ export const MetaRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid var(--border-soft);
   padding-top: 10px;
 `;
 
 export const MetaText = styled.span`
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-3);
   font-family: ui-monospace, SFMono-Regular, monospace;
 `;
 
 export const LinkHint = styled.span`
   font-size: 11px;
-  color: #2563eb;
+  color: var(--accent);
   font-weight: 500;
 `;
