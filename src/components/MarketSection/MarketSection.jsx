@@ -11,6 +11,13 @@ function formatPct(value) {
   return `${sign}${value.toFixed(2)}%`;
 }
 
+function dirOf(v) {
+  if (v == null || isNaN(v)) return 'flat';
+  return v > 0 ? 'up' : v < 0 ? 'down' : 'flat';
+}
+
+const ARROW = { up: '▲', down: '▼', flat: '―' };
+
 function MarketCard({ item, result }) {
   const stat = result?.data ? calcDailyWeekly(result.data) : null;
   const error = result?.error;
@@ -28,17 +35,18 @@ function MarketCard({ item, result }) {
       {hasData ? (
         <S.ChangesRow>
           <S.ChangeBlock>
-            <S.ChangeLabel>전일 대비</S.ChangeLabel>
-            <S.ChangeValue $positive={day > 0} $negative={day < 0}>
+            <S.ChangeLabel>전일</S.ChangeLabel>
+            <S.Pill $dir={dirOf(day)}>
+              <span>{ARROW[dirOf(day)]}</span>
               {formatPct(day)}
-            </S.ChangeValue>
+            </S.Pill>
           </S.ChangeBlock>
-          <S.Divider />
           <S.ChangeBlock>
-            <S.ChangeLabel>전주 대비 (5거래일)</S.ChangeLabel>
-            <S.ChangeValue $positive={week > 0} $negative={week < 0}>
+            <S.ChangeLabel>전주 (5거래일)</S.ChangeLabel>
+            <S.Pill $dir={dirOf(week)}>
+              <span>{ARROW[dirOf(week)]}</span>
               {formatPct(week)}
-            </S.ChangeValue>
+            </S.Pill>
           </S.ChangeBlock>
         </S.ChangesRow>
       ) : error ? (

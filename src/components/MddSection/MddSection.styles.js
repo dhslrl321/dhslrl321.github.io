@@ -197,6 +197,13 @@ export const StatSub = styled.div`
   font-variant-numeric: tabular-nums;
 `;
 
+export const LoadingRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+`;
+
 export const ShortBlock = styled.div`
   margin-top: 28px;
 `;

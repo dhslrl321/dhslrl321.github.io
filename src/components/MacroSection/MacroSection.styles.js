@@ -65,10 +65,11 @@ export const SeriesId = styled.div`
 
 export const ValueRow = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   margin-bottom: 8px;
   flex-wrap: wrap;
+  min-height: 36px;
 `;
 
 export const Value = styled.div`
@@ -86,10 +87,16 @@ export const Unit = styled.span`
 `;
 
 export const Change = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: ${p => (p.$positive ? '#dc2626' : p.$negative ? '#2563eb' : '#6b7280')};
+  background: ${p => (p.$positive ? '#fef2f2' : p.$negative ? '#eff6ff' : '#f3f4f6')};
 `;
 
 export const MetaRow = styled.div`
@@ -113,7 +120,7 @@ export const LinkHint = styled.span`
 export const Description = styled.p`
   font-size: 12px;
   line-height: 1.5;
-  color: #6b7280;
+  color: #9ca3af;
   border-top: 1px solid #f3f4f6;
   padding-top: 10px;
 `;

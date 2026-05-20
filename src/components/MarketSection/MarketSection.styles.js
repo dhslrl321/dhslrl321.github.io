@@ -65,8 +65,7 @@ export const SeriesId = styled.div`
 
 export const ChangesRow = styled.div`
   display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 10px 0;
   margin-bottom: 8px;
 `;
@@ -76,25 +75,36 @@ export const ChangeBlock = styled.div`
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  gap: 6px;
 `;
 
 export const ChangeLabel = styled.div`
   font-size: 11px;
   color: #9ca3af;
-  margin-bottom: 4px;
 `;
 
-export const ChangeValue = styled.div`
-  font-size: 20px;
+const dirColor = {
+  up: { fg: '#dc2626', bg: '#fef2f2' },
+  down: { fg: '#2563eb', bg: '#eff6ff' },
+  flat: { fg: '#6b7280', bg: '#f3f4f6' },
+};
+
+export const Pill = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 16px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: ${p => (p.$positive ? '#dc2626' : p.$negative ? '#2563eb' : '#6b7280')};
-`;
+  color: ${p => dirColor[p.$dir].fg};
+  background: ${p => dirColor[p.$dir].bg};
 
-export const Divider = styled.div`
-  width: 1px;
-  align-self: stretch;
-  background: #e5e7eb;
+  span {
+    font-size: 10px;
+  }
 `;
 
 export const NoData = styled.div`

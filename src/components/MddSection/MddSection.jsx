@@ -74,13 +74,16 @@ export default function MddSection() {
     setError(null);
 
     // 공매도/통계는 MDD 와 독립적으로 (실패해도 MDD 는 보여줌)
+    setShortInterest('loading');
+    setStats('loading');
+
     fetchShortInterest(sym)
       .then(si => setShortInterest({ rows: si.rows }))
       .catch(e => setShortInterest({ error: e.message }));
 
     fetchQuoteStats(sym)
-      .then(setStats)
-      .catch(() => setStats(null));
+      .then(d => setStats({ data: d }))
+      .catch(e => setStats({ error: e.message }));
 
     try {
       const series = await fetchDailySeries(sym, {
@@ -106,13 +109,11 @@ export default function MddSection() {
 
   const dd = result?.dd;
 
-  const sharesOut = stats?.sharesOutstanding;
-  const latestSI =
-    !shortInterest?.error && shortInterest?.rows?.[0]
-      ? parseInterest(shortInterest.rows[0].interest)
-      : null;
+  const statsData = stats?.data;
+  const sharesOut = statsData?.sharesOutstanding;
+  const latestSI = shortInterest?.rows?.[0] ? parseInterest(shortInterest.rows[0].interest) : null;
   const shortPct = sharesOut && latestSI ? (latestSI / sharesOut) * 100 : null;
-  const shortValue = stats?.price && latestSI ? latestSI * stats.price : null;
+  const shortValue = statsData?.price && latestSI ? latestSI * statsData.price : null;
 
   return (
     <S.Section>
@@ -255,16 +256,26 @@ export default function MddSection() {
         </>
       )}
 
-      {stats && (
+      {stats === 'loading' && (
+        <S.StatRow>
+          <S.StatItem>
+            <S.LoadingRow>
+              <Spinner />
+            </S.LoadingRow>
+          </S.StatItem>
+        </S.StatRow>
+      )}
+
+      {statsData && (
         <S.StatRow>
           <S.StatItem>
             <S.StatLabel>시가총액</S.StatLabel>
-            <S.StatValue>${abbr(stats.marketCap)}</S.StatValue>
-            {fxRate && <S.StatSub>₩{abbr(stats.marketCap * fxRate)}</S.StatSub>}
+            <S.StatValue>${abbr(statsData.marketCap)}</S.StatValue>
+            {fxRate && <S.StatSub>₩{abbr(statsData.marketCap * fxRate)}</S.StatSub>}
           </S.StatItem>
           <S.StatItem>
             <S.StatLabel>추정 발행주식수</S.StatLabel>
-            <S.StatValue>{abbr(stats.sharesOutstanding)} 주</S.StatValue>
+            <S.StatValue>{abbr(statsData.sharesOutstanding)} 주</S.StatValue>
           </S.StatItem>
           {shortPct != null && (
             <S.StatItem>
@@ -285,7 +296,11 @@ export default function MddSection() {
       {shortInterest && (
         <S.ShortBlock>
           <S.ShortTitle>공매도 현황 (Nasdaq Short Interest)</S.ShortTitle>
-          {shortInterest.error ? (
+          {shortInterest === 'loading' ? (
+            <S.LoadingRow>
+              <Spinner />
+            </S.LoadingRow>
+          ) : shortInterest.error ? (
             <S.ShortNote>공매도 데이터 없음: {shortInterest.error}</S.ShortNote>
           ) : (
             <S.TableWrap>
