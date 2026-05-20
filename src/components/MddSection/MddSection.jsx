@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import * as S from './MddSection.styles';
 import { fetchDailySeries } from '../../utils/yahooClient';
-import { fetchShortInterest } from '../../utils/nasdaqClient';
+import { fetchShortInterest, fetchQuoteStats } from '../../utils/nasdaqClient';
 import { computeDrawdown } from '../../utils/mdd';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -25,6 +25,19 @@ function formatTick(date) {
   return date?.slice(0, 7);
 }
 
+function abbr(n) {
+  if (n == null || isNaN(n)) return '—';
+  if (n >= 1e12) return `${(n / 1e12).toFixed(2)}조`;
+  if (n >= 1e8) return `${(n / 1e8).toFixed(1)}억`;
+  if (n >= 1e4) return `${(n / 1e4).toFixed(1)}만`;
+  return n.toLocaleString();
+}
+
+function parseInterest(raw) {
+  const n = parseFloat(String(raw).replace(/[,\s]/g, ''));
+  return isNaN(n) ? null : n;
+}
+
 export default function MddSection() {
   const [ticker, setTicker] = useState('NVDA');
   const [start, setStart] = useState('2020-01-01');
@@ -33,6 +46,7 @@ export default function MddSection() {
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null); // { symbol, dd }
   const [shortInterest, setShortInterest] = useState(null); // { rows } | { error }
+  const [stats, setStats] = useState(null); // { marketCap, price, sharesOutstanding }
 
   const run = async () => {
     const sym = ticker.trim().toUpperCase();
@@ -48,10 +62,14 @@ export default function MddSection() {
     setLoading(true);
     setError(null);
 
-    // 공매도는 MDD 와 독립적으로 (실패해도 MDD 는 보여줌)
+    // 공매도/통계는 MDD 와 독립적으로 (실패해도 MDD 는 보여줌)
     fetchShortInterest(sym)
       .then(si => setShortInterest({ rows: si.rows }))
       .catch(e => setShortInterest({ error: e.message }));
+
+    fetchQuoteStats(sym)
+      .then(setStats)
+      .catch(() => setStats(null));
 
     try {
       const series = await fetchDailySeries(sym, {
@@ -76,6 +94,13 @@ export default function MddSection() {
   };
 
   const dd = result?.dd;
+
+  const sharesOut = stats?.sharesOutstanding;
+  const latestSI =
+    !shortInterest?.error && shortInterest?.rows?.[0]
+      ? parseInterest(shortInterest.rows[0].interest)
+      : null;
+  const shortPct = sharesOut && latestSI ? (latestSI / sharesOut) * 100 : null;
 
   return (
     <S.Section>
@@ -216,6 +241,25 @@ export default function MddSection() {
             </ResponsiveContainer>
           </S.ChartBox>
         </>
+      )}
+
+      {stats && (
+        <S.StatRow>
+          <S.StatItem>
+            <S.StatLabel>시가총액</S.StatLabel>
+            <S.StatValue>${abbr(stats.marketCap)}</S.StatValue>
+          </S.StatItem>
+          <S.StatItem>
+            <S.StatLabel>추정 발행주식수</S.StatLabel>
+            <S.StatValue>{abbr(stats.sharesOutstanding)} 주</S.StatValue>
+          </S.StatItem>
+          {shortPct != null && (
+            <S.StatItem>
+              <S.StatLabel>공매도 비중 (최근)</S.StatLabel>
+              <S.StatValue>{shortPct.toFixed(2)}%</S.StatValue>
+            </S.StatItem>
+          )}
+        </S.StatRow>
       )}
 
       {shortInterest && (

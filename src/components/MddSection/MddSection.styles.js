@@ -157,6 +157,35 @@ export const ChartBox = styled.div`
   padding: 8px 8px 0 0;
 `;
 
+export const StatRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+`;
+
+export const StatItem = styled.div`
+  flex: 1;
+  min-width: 140px;
+  padding: 14px 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+`;
+
+export const StatLabel = styled.div`
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+`;
+
+export const StatValue = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1d23;
+  font-variant-numeric: tabular-nums;
+`;
+
 export const ShortBlock = styled.div`
   margin-top: 28px;
 `;

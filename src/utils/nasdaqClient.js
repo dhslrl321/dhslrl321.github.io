@@ -26,3 +26,33 @@ export async function fetchShortInterest(symbol) {
   }
   return { headers: table.headers, rows: table.rows };
 }
+
+// "5,473,270,924,976" / "$225.125" → number
+function parseNum(raw) {
+  if (raw == null) return null;
+  const n = parseFloat(String(raw).replace(/[$,%\s]/g, ''));
+  return isNaN(n) ? null : n;
+}
+
+/**
+ * 시가총액·현재가·추정 발행주식수를 가져온다.
+ *  - 발행주식수 = 시가총액 / 현재가 (nasdaq 미제공이라 추정)
+ * @param {string} symbol
+ * @returns {Promise<{marketCap:number|null, price:number|null, sharesOutstanding:number|null}>}
+ */
+export async function fetchQuoteStats(symbol) {
+  const sym = symbol.trim().toUpperCase();
+  const summaryUrl = `${BASE}/${encodeURIComponent(sym)}/summary?assetClass=stocks`;
+  const infoUrl = `${BASE}/${encodeURIComponent(sym)}/info?assetClass=stocks`;
+
+  const [summary, info] = await Promise.all([
+    cachedFetch(`nasdaq:sum:${sym}`, () => proxyFetchJson(summaryUrl)),
+    cachedFetch(`nasdaq:info:${sym}`, () => proxyFetchJson(infoUrl)),
+  ]);
+
+  const marketCap = parseNum(summary?.data?.summaryData?.MarketCap?.value);
+  const price = parseNum(info?.data?.primaryData?.lastSalePrice);
+  const sharesOutstanding = marketCap && price ? marketCap / price : null;
+
+  return { marketCap, price, sharesOutstanding };
+}
