@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import * as S from './MddSection.styles';
 import { fetchDailySeries } from '../../utils/yahooClient';
+import { fetchShortInterest } from '../../utils/nasdaqClient';
 import { computeDrawdown } from '../../utils/mdd';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -25,12 +26,13 @@ function formatTick(date) {
 }
 
 export default function MddSection() {
-  const [ticker, setTicker] = useState('SPY');
+  const [ticker, setTicker] = useState('NVDA');
   const [start, setStart] = useState('2020-01-01');
   const [end, setEnd] = useState(today());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null); // { symbol, dd }
+  const [shortInterest, setShortInterest] = useState(null); // { rows } | { error }
 
   const run = async () => {
     const sym = ticker.trim().toUpperCase();
@@ -45,6 +47,12 @@ export default function MddSection() {
 
     setLoading(true);
     setError(null);
+
+    // 공매도는 MDD 와 독립적으로 (실패해도 MDD 는 보여줌)
+    fetchShortInterest(sym)
+      .then(si => setShortInterest({ rows: si.rows }))
+      .catch(e => setShortInterest({ error: e.message }));
+
     try {
       const series = await fetchDailySeries(sym, {
         period1: toUnix(start),
@@ -71,10 +79,10 @@ export default function MddSection() {
 
   return (
     <S.Section>
-      <S.SectionTitle>MDD 분석 (최대 낙폭)</S.SectionTitle>
+      <S.SectionTitle>티커 분석 · MDD & 공매도</S.SectionTitle>
       <S.SectionDesc>
-        티커와 기간을 선택하면 해당 구간의 최대 낙폭(peak→trough)과 낙폭 추이를 보여줍니다. 데이터:
-        Yahoo Finance (실시간 · 1시간 캐시).
+        티커와 기간을 선택하면 해당 구간의 최대 낙폭(peak→trough)·낙폭 추이와 최근 공매도 현황을
+        보여줍니다. 데이터: Yahoo Finance · Nasdaq (실시간 · 1시간 캐시).
       </S.SectionDesc>
 
       <S.Form onSubmit={onSubmit}>
@@ -102,7 +110,7 @@ export default function MddSection() {
           />
         </S.Field>
         <S.SubmitButton type="submit" disabled={loading}>
-          {loading ? '불러오는 중…' : 'MDD 조회'}
+          {loading ? '불러오는 중…' : '조회'}
         </S.SubmitButton>
       </S.Form>
 
@@ -127,7 +135,10 @@ export default function MddSection() {
           </S.ChartLegend>
           <S.ChartBox>
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={dd.underwater} margin={{ top: 8, right: 12, left: 8, bottom: 8 }}>
+              <ComposedChart
+                data={dd.underwater}
+                margin={{ top: 8, right: 12, left: 8, bottom: 8 }}
+              >
                 <defs>
                   <linearGradient id="ddFill" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#dc2626" stopOpacity={0.04} />
@@ -205,6 +216,38 @@ export default function MddSection() {
             </ResponsiveContainer>
           </S.ChartBox>
         </>
+      )}
+
+      {shortInterest && (
+        <S.ShortBlock>
+          <S.ShortTitle>공매도 현황 (Nasdaq Short Interest)</S.ShortTitle>
+          {shortInterest.error ? (
+            <S.ShortNote>공매도 데이터 없음: {shortInterest.error}</S.ShortNote>
+          ) : (
+            <S.TableWrap>
+              <S.Table>
+                <thead>
+                  <tr>
+                    <th>결제일</th>
+                    <th>공매도 잔량</th>
+                    <th>평균 일거래량</th>
+                    <th>커버 소요일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shortInterest.rows.slice(0, 8).map(row => (
+                    <tr key={row.settlementDate}>
+                      <td>{row.settlementDate}</td>
+                      <td>{row.interest}</td>
+                      <td>{row.avgDailyShareVolume}</td>
+                      <td>{Number(row.daysToCover).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </S.Table>
+            </S.TableWrap>
+          )}
+        </S.ShortBlock>
       )}
     </S.Section>
   );

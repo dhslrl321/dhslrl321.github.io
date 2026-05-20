@@ -1,29 +1,21 @@
 import * as S from './NavigationBar.styles';
 
-const NAV_ITEMS = [
-  {
-    id: 'kb-think',
-    label: '시장 동향 분석',
-    url: 'https://kbthink.com/investment/trend.html',
-  },
-  {
-    id: 'fred',
-    label: 'FRED',
-    url: 'https://fred.stlouisfed.org/',
-  },
-  {
-    id: 'tradingview',
-    label: 'TradingView',
-    url: 'https://www.tradingview.com/',
-  },
+const TABS = [
+  { id: 'macro', label: '매크로' },
+  { id: 'ticker', label: '티커 분석' },
 ];
 
-export default function NavigationBar() {
+export default function NavigationBar({ activeTab, onTabChange }) {
   return (
     <S.Nav>
-      {NAV_ITEMS.map(item => (
-        <S.NavItem key={item.id} as="a" href={item.url} target="_blank" rel="noopener noreferrer">
-          {item.label} ↗
+      {TABS.map(tab => (
+        <S.NavItem
+          key={tab.id}
+          as="button"
+          className={activeTab === tab.id ? 'active' : ''}
+          onClick={() => onTabChange(tab.id)}
+        >
+          {tab.label}
         </S.NavItem>
       ))}
 

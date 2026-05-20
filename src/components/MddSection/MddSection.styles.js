@@ -156,3 +156,60 @@ export const ChartBox = styled.div`
   border-radius: 12px;
   padding: 8px 8px 0 0;
 `;
+
+export const ShortBlock = styled.div`
+  margin-top: 28px;
+`;
+
+export const ShortTitle = styled.h3`
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1d23;
+  margin-bottom: 10px;
+`;
+
+export const ShortNote = styled.p`
+  font-size: 13px;
+  color: #9ca3af;
+`;
+
+export const TableWrap = styled.div`
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+`;
+
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 10px 14px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+
+  thead th {
+    background: #f9fafb;
+    color: #6b7280;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  tbody tr + tr td {
+    border-top: 1px solid #f3f4f6;
+  }
+
+  tbody td {
+    color: #1a1d23;
+  }
+`;
