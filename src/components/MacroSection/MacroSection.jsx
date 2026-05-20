@@ -3,6 +3,7 @@ import { MACRO_INDICATORS, MACRO_COMPARE_URL } from '../../config/seriesConfig';
 import { calcMacro } from '../../utils/changeCalculator';
 import { formatKoreanDate } from '../../utils/dateFormatter';
 import { fetchFredSeries } from '../../utils/fredClient';
+import { fetchDailySeries } from '../../utils/yahooClient';
 import { useSeriesMap } from '../../hooks/useSeriesMap';
 
 function formatValue(value, decimals) {
@@ -13,6 +14,12 @@ function formatValue(value, decimals) {
   });
 }
 
+function loadIndicator(ind) {
+  return ind.source === 'yahoo'
+    ? fetchDailySeries(ind.yahooSymbol, { range: '1mo' })
+    : fetchFredSeries(ind.fredId);
+}
+
 function MacroCard({ indicator, result }) {
   const stat = result?.data ? calcMacro(result.data) : null;
   const error = result?.error;
@@ -21,7 +28,7 @@ function MacroCard({ indicator, result }) {
     <S.Card href={indicator.link} target="_blank" rel="noopener noreferrer">
       <S.CardHeader>
         <S.Name>{indicator.name}</S.Name>
-        <S.SeriesId>{indicator.seriesId}</S.SeriesId>
+        <S.SeriesId>{indicator.note}</S.SeriesId>
       </S.CardHeader>
 
       <S.ValueRow>
@@ -41,7 +48,7 @@ function MacroCard({ indicator, result }) {
         <S.Date>
           {error ? '불러오기 실패' : stat?.latestDate ? formatKoreanDate(stat.latestDate) : '—'}
         </S.Date>
-        <S.LinkHint>FRED ↗</S.LinkHint>
+        <S.LinkHint>{indicator.source === 'yahoo' ? 'Yahoo' : 'FRED'} ↗</S.LinkHint>
       </S.MetaRow>
 
       <S.Description>{indicator.description}</S.Description>
@@ -52,8 +59,8 @@ function MacroCard({ indicator, result }) {
 export default function MacroSection() {
   const { map } = useSeriesMap(
     MACRO_INDICATORS.map(ind => ({
-      key: ind.seriesId,
-      load: () => fetchFredSeries(ind.seriesId),
+      key: ind.key,
+      load: () => loadIndicator(ind),
     }))
   );
 
@@ -63,7 +70,7 @@ export default function MacroSection() {
         <div>
           <S.SectionTitle>매크로 지표</S.SectionTitle>
           <S.SectionDesc>
-            국채 금리 곡선, 신용 스프레드, 금융 스트레스, 원유. (실시간 · 1시간 캐시)
+            기준금리, 국채 금리 곡선, 신용 스프레드, 금융 스트레스, 원유. (실시간 · 1시간 캐시)
           </S.SectionDesc>
         </div>
         <S.CompareButton href={MACRO_COMPARE_URL} target="_blank" rel="noopener noreferrer">
@@ -72,7 +79,7 @@ export default function MacroSection() {
       </S.SectionHeader>
       <S.Grid>
         {MACRO_INDICATORS.map(ind => (
-          <MacroCard key={ind.seriesId} indicator={ind} result={map[ind.seriesId]} />
+          <MacroCard key={ind.key} indicator={ind} result={map[ind.key]} />
         ))}
       </S.Grid>
     </S.Section>

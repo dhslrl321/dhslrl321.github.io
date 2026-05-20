@@ -6,70 +6,108 @@ const fredUrl = id => `https://fred.stlouisfed.org/series/${id}`;
 const tvUrl = sym => `https://www.tradingview.com/symbols/${sym}/`;
 
 // ─────────────────────────────────────────────
-// 매크로 지표 (FRED)
+// 매크로 지표
+//  - source 'yahoo': 장중 실시간 (15분 지연), 국채 금리
+//  - source 'fred' : 일/월 단위 발표
+//  - fredId: FRED 비교차트 및 카드 링크용 (yahoo 항목도 대응 FRED 시리즈 보유)
 // ─────────────────────────────────────────────
 export const MACRO_INDICATORS = [
   {
-    seriesId: 'DGS2',
-    name: '2년 국채 금리',
+    key: 'FEDFUNDS',
+    name: '기준금리 (FFR)',
+    note: 'FEDFUNDS',
     unit: '%',
     decimals: 2,
-    description: '2년 만기 미국 국채 수익률. 단기 금리 정책 기대를 반영.',
-    link: fredUrl('DGS2'),
+    source: 'fred',
+    fredId: 'FEDFUNDS',
+    description: 'Fed 가 설정하는 정책금리. 통화정책 방향(긴축/완화)을 직접 보여줌.',
+    link: fredUrl('FEDFUNDS'),
   },
   {
-    seriesId: 'DGS10',
-    name: '10년 국채 금리',
+    key: 'DGS5',
+    name: '5년 국채 금리',
+    note: '^FVX',
     unit: '%',
     decimals: 2,
-    description: '10년 만기 미국 국채 수익률. 장기 성장·물가 기대의 대표 지표.',
+    source: 'yahoo',
+    yahooSymbol: '^FVX',
+    fredId: 'DGS5',
+    description: '5년 만기 미국 국채 수익률. 중기 금리 기대를 반영. (실시간, 15분 지연)',
+    link: fredUrl('DGS5'),
+  },
+  {
+    key: 'DGS10',
+    name: '10년 국채 금리',
+    note: '^TNX',
+    unit: '%',
+    decimals: 2,
+    source: 'yahoo',
+    yahooSymbol: '^TNX',
+    fredId: 'DGS10',
+    description: '10년 만기 미국 국채 수익률. 장기 성장·물가 기대의 대표 지표. (실시간, 15분 지연)',
     link: fredUrl('DGS10'),
   },
   {
-    seriesId: 'DGS30',
+    key: 'DGS30',
     name: '30년 국채 금리',
+    note: '^TYX',
     unit: '%',
     decimals: 2,
-    description: '30년 만기 미국 국채 수익률. 초장기 금리 추세를 보여줌.',
+    source: 'yahoo',
+    yahooSymbol: '^TYX',
+    fredId: 'DGS30',
+    description: '30년 만기 미국 국채 수익률. 초장기 금리 추세. (실시간, 15분 지연)',
     link: fredUrl('DGS30'),
   },
   {
-    seriesId: 'T10Y2Y',
+    key: 'T10Y2Y',
     name: '장단기 금리차 (10Y - 2Y)',
+    note: 'T10Y2Y',
     unit: '%p',
     decimals: 2,
+    source: 'fred',
+    fredId: 'T10Y2Y',
     description: '10년물 - 2년물. 마이너스(역전)는 경기침체 선행 신호로 작동해왔음.',
     link: fredUrl('T10Y2Y'),
   },
   {
-    seriesId: 'BAMLH0A0HYM2',
+    key: 'BAMLH0A0HYM2',
     name: 'High Yield 스프레드',
+    note: 'BAMLH0A0HYM2',
     unit: '%',
     decimals: 2,
+    source: 'fred',
+    fredId: 'BAMLH0A0HYM2',
     description:
       'ICE BofA US High Yield 채권의 옵션조정 스프레드. 신용 위험·시장 스트레스의 핵심 지표.',
     link: fredUrl('BAMLH0A0HYM2'),
   },
   {
-    seriesId: 'KCFSI',
+    key: 'KCFSI',
     name: 'KCFSI (캔자스시티 금융스트레스)',
+    note: 'KCFSI',
     unit: '',
     decimals: 2,
+    source: 'fred',
+    fredId: 'KCFSI',
     description: '캔자스시티 연은의 금융시장 스트레스 지수. 0 이상이면 평균 이상의 스트레스.',
     link: fredUrl('KCFSI'),
   },
   {
-    seriesId: 'DCOILWTICO',
+    key: 'DCOILWTICO',
     name: 'WTI 원유 가격',
+    note: 'DCOILWTICO',
     unit: '$',
     decimals: 2,
+    source: 'fred',
+    fredId: 'DCOILWTICO',
     description: 'WTI 원유 현물 가격(달러/배럴). 글로벌 인플레와 수요 동향의 선행 지표.',
     link: fredUrl('DCOILWTICO'),
   },
 ];
 
-// 매크로 비교 차트 (한 번에 다 보기)
-export const MACRO_COMPARE_URL = `https://fred.stlouisfed.org/graph/?id=${MACRO_INDICATORS.map(m => m.seriesId).join(',')}`;
+// 매크로 비교 차트 (FRED 시리즈 기준으로 한 번에 보기)
+export const MACRO_COMPARE_URL = `https://fred.stlouisfed.org/graph/?id=${MACRO_INDICATORS.map(m => m.fredId).join(',')}`;
 
 // ─────────────────────────────────────────────
 // 시장 (지수 + ETF + 외부 지표)
