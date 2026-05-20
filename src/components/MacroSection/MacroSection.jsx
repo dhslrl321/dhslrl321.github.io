@@ -1,4 +1,5 @@
 import * as S from './MacroSection.styles';
+import Spinner from '../common/Spinner';
 import { MACRO_INDICATORS, MACRO_COMPARE_URL } from '../../config/seriesConfig';
 import { calcMacro } from '../../utils/changeCalculator';
 import { formatKoreanDate } from '../../utils/dateFormatter';
@@ -23,6 +24,7 @@ function loadIndicator(ind) {
 function MacroCard({ indicator, result }) {
   const stat = result?.data ? calcMacro(result.data) : null;
   const error = result?.error;
+  const loading = !result;
 
   return (
     <S.Card href={indicator.link} target="_blank" rel="noopener noreferrer">
@@ -32,10 +34,14 @@ function MacroCard({ indicator, result }) {
       </S.CardHeader>
 
       <S.ValueRow>
-        <S.Value>
-          {formatValue(stat?.latestValue, indicator.decimals)}
-          <S.Unit>{indicator.unit}</S.Unit>
-        </S.Value>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <S.Value>
+            {formatValue(stat?.latestValue, indicator.decimals)}
+            <S.Unit>{indicator.unit}</S.Unit>
+          </S.Value>
+        )}
         {stat?.absChange != null && (
           <S.Change $positive={stat.absChange > 0} $negative={stat.absChange < 0}>
             {stat.absChange > 0 ? '▲' : stat.absChange < 0 ? '▼' : '―'}{' '}

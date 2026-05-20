@@ -1,4 +1,5 @@
 import * as S from './MarketSection.styles';
+import Spinner from '../common/Spinner';
 import { MARKET_ITEMS } from '../../config/seriesConfig';
 import { calcDailyWeekly } from '../../utils/changeCalculator';
 import { fetchDailySeries } from '../../utils/yahooClient';
@@ -40,10 +41,14 @@ function MarketCard({ item, result }) {
             </S.ChangeValue>
           </S.ChangeBlock>
         </S.ChangesRow>
+      ) : error ? (
+        <S.NoData>불러오기 실패</S.NoData>
+      ) : item.yahooSymbol ? (
+        <S.LoadingWrap>
+          <Spinner />
+        </S.LoadingWrap>
       ) : (
-        <S.NoData>
-          {error ? '불러오기 실패' : item.yahooSymbol ? '불러오는 중…' : '외부 사이트에서 확인 →'}
-        </S.NoData>
+        <S.NoData>외부 사이트에서 확인 →</S.NoData>
       )}
 
       <S.MetaRow>

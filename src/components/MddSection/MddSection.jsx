@@ -11,6 +11,7 @@ import {
   ReferenceDot,
 } from 'recharts';
 import * as S from './MddSection.styles';
+import Spinner from '../common/Spinner';
 import { fetchDailySeries } from '../../utils/yahooClient';
 import { fetchShortInterest, fetchQuoteStats } from '../../utils/nasdaqClient';
 import { computeDrawdown } from '../../utils/mdd';
@@ -135,7 +136,7 @@ export default function MddSection() {
           />
         </S.Field>
         <S.SubmitButton type="submit" disabled={loading}>
-          {loading ? '불러오는 중…' : '조회'}
+          {loading ? <Spinner $size="16px" $light /> : '조회'}
         </S.SubmitButton>
       </S.Form>
 
