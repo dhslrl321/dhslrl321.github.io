@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   ComposedChart,
   Area,
@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import * as S from './MddSection.styles';
 import Spinner from '../common/Spinner';
+import { FX_USDKRW_SYMBOL } from '../../config/seriesConfig';
 import { fetchDailySeries } from '../../utils/yahooClient';
 import { fetchShortInterest, fetchQuoteStats } from '../../utils/nasdaqClient';
 import { computeDrawdown } from '../../utils/mdd';
@@ -48,6 +49,15 @@ export default function MddSection() {
   const [result, setResult] = useState(null); // { symbol, dd }
   const [shortInterest, setShortInterest] = useState(null); // { rows } | { error }
   const [stats, setStats] = useState(null); // { marketCap, price, sharesOutstanding }
+  const [fxRate, setFxRate] = useState(null); // 원/달러
+
+  useEffect(() => {
+    fetchDailySeries(FX_USDKRW_SYMBOL, { range: '5d' })
+      .then(s => {
+        if (s.length) setFxRate(s[s.length - 1].value);
+      })
+      .catch(() => setFxRate(null));
+  }, []);
 
   const run = async () => {
     const sym = ticker.trim().toUpperCase();
@@ -250,6 +260,7 @@ export default function MddSection() {
           <S.StatItem>
             <S.StatLabel>시가총액</S.StatLabel>
             <S.StatValue>${abbr(stats.marketCap)}</S.StatValue>
+            {fxRate && <S.StatSub>₩{abbr(stats.marketCap * fxRate)}</S.StatSub>}
           </S.StatItem>
           <S.StatItem>
             <S.StatLabel>추정 발행주식수</S.StatLabel>
@@ -265,6 +276,7 @@ export default function MddSection() {
             <S.StatItem>
               <S.StatLabel>공매도 액수 (최근 × 현재가)</S.StatLabel>
               <S.StatValue>${abbr(shortValue)}</S.StatValue>
+              {fxRate && <S.StatSub>₩{abbr(shortValue * fxRate)}</S.StatSub>}
             </S.StatItem>
           )}
         </S.StatRow>

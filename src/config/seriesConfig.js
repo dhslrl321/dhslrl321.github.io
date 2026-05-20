@@ -104,7 +104,22 @@ export const MACRO_INDICATORS = [
     description: 'WTI 원유 현물 가격(달러/배럴). 글로벌 인플레와 수요 동향의 선행 지표.',
     link: fredUrl('DCOILWTICO'),
   },
+  {
+    key: 'USDKRW',
+    name: '원/달러 환율',
+    note: 'USDKRW=X',
+    unit: '원',
+    decimals: 2,
+    source: 'yahoo',
+    yahooSymbol: 'USDKRW=X',
+    fredId: 'DEXKOUS',
+    description: '1달러당 원화 가치. 상승은 원화 약세(달러 강세)를 의미. (실시간, 15분 지연)',
+    link: fredUrl('DEXKOUS'),
+  },
 ];
+
+// 화면의 달러 금액을 원화로 환산할 때 쓰는 환율 심볼
+export const FX_USDKRW_SYMBOL = 'USDKRW=X';
 
 // 매크로 비교 차트 (FRED 시리즈 기준으로 한 번에 보기)
 export const MACRO_COMPARE_URL = `https://fred.stlouisfed.org/graph/?id=${MACRO_INDICATORS.map(m => m.fredId).join(',')}`;

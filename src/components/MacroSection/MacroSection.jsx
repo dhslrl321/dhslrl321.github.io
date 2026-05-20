@@ -1,6 +1,6 @@
 import * as S from './MacroSection.styles';
 import Spinner from '../common/Spinner';
-import { MACRO_INDICATORS, MACRO_COMPARE_URL } from '../../config/seriesConfig';
+import { MACRO_INDICATORS } from '../../config/seriesConfig';
 import { calcMacro } from '../../utils/changeCalculator';
 import { formatKoreanDate } from '../../utils/dateFormatter';
 import { fetchFredSeries } from '../../utils/fredClient';
@@ -72,17 +72,10 @@ export default function MacroSection() {
 
   return (
     <S.Section>
-      <S.SectionHeader>
-        <div>
-          <S.SectionTitle>매크로 지표</S.SectionTitle>
-          <S.SectionDesc>
-            기준금리, 국채 금리 곡선, 신용 스프레드, 금융 스트레스, 원유. (실시간 · 1시간 캐시)
-          </S.SectionDesc>
-        </div>
-        <S.CompareButton href={MACRO_COMPARE_URL} target="_blank" rel="noopener noreferrer">
-          📊 비교 차트로 보기 ↗
-        </S.CompareButton>
-      </S.SectionHeader>
+      <S.SectionTitle>매크로 지표</S.SectionTitle>
+      <S.SectionDesc>
+        기준금리, 국채 금리 곡선, 신용 스프레드, 금융 스트레스, 원유, 환율. (실시간 · 1시간 캐시)
+      </S.SectionDesc>
       <S.Grid>
         {MACRO_INDICATORS.map(ind => (
           <MacroCard key={ind.key} indicator={ind} result={map[ind.key]} />

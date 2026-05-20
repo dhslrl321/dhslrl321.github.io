@@ -190,6 +190,13 @@ export const StatValue = styled.div`
   font-variant-numeric: tabular-nums;
 `;
 
+export const StatSub = styled.div`
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+`;
+
 export const ShortBlock = styled.div`
   margin-top: 28px;
 `;
