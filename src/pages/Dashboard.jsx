@@ -3,17 +3,12 @@ import MacroSection from '../components/MacroSection/MacroSection.jsx';
 import MarketSection from '../components/MarketSection/MarketSection.jsx';
 import MddSection from '../components/MddSection/MddSection.jsx';
 
-export default function Dashboard({ activeTab }) {
+export default function Dashboard() {
   return (
     <S.Container>
-      {activeTab === 'macro' ? (
-        <MacroSection />
-      ) : (
-        <>
-          <MddSection />
-          <MarketSection />
-        </>
-      )}
+      <MddSection />
+      <MarketSection />
+      <MacroSection />
     </S.Container>
   );
 }
