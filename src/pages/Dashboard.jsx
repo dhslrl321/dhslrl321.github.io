@@ -10,8 +10,8 @@ export default function Dashboard({ activeTab }) {
         <MddSection />
       ) : (
         <>
-          <MarketSection />
           <MacroSection />
+          <MarketSection />
         </>
       )}
     </S.Container>
